@@ -1,3 +1,6 @@
+// Fully combinatorial RAMBAM S-Box implementation, with all computations done in a single
+// clock cycle. After extracting traces from this, this module was deemed to hard to analyze
+// and replaced with the one in rambam_aes_multiple_sbox.sv.
 module rambam_sbox(out, plaintext, r);
     // External parameters
     parameter int d = `d;

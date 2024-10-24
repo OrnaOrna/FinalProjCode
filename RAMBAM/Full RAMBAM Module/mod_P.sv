@@ -1,3 +1,4 @@
+// Reduces its input modulo P, in essence calculating the systematic syndrome.
 module mod_P(
     in, out
 );
@@ -7,6 +8,7 @@ module mod_P(
     input logic [0:7+d] in;
     output logic [0:7] out;
 
+    // See matrix_mul.sv for the matrix transpositon trick.
     logic [0:7][0:d-1] matrix_transposed;
     genvar i,j;
 

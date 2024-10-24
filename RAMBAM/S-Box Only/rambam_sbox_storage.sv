@@ -1,3 +1,6 @@
+// Sequential RAMBAM S-Box implementation, with registers after each combinatorial stage, to "emulate" 
+// the software implementation. Registers help with slowing down the computation and increasing the SNR
+// to make attacks actually significant and not highly noise-sensitive.
 module rambam_sbox_storage(out, clk, rst, plaintext, r);
     // External parameters
     parameter int d = `d;
@@ -12,7 +15,7 @@ module rambam_sbox_storage(out, clk, rst, plaintext, r);
 
     input logic clk, rst;
 
-    // Internal derived parameters
+    // Internal derived parameters; they are read from ../Include/sbox_paramters {d}.svh
     localparam bit[0:8+d] PQ = `PQ;
     localparam bit[0:7+d][0:7+d] W = `W;
     localparam bit[0:7+d] w = `w;
@@ -21,7 +24,7 @@ module rambam_sbox_storage(out, clk, rst, plaintext, r);
     localparam bit[0:7+d][0:7+d] pow4_mat = `pow4;
 
 
-    // 2 wires for each multiple - one without added randomness and one with.
+    // 3 wires for each stage - one without added randomness, one with, and one after storage.
     logic [0:7+d] t1,
                   t2_no_random,   t2, t2_saved,
                   t3_no_random,   t3, t3_saved,
@@ -31,11 +34,9 @@ module rambam_sbox_storage(out, clk, rst, plaintext, r);
                   t240_no_random, t240, t240_saved,
                   t254_no_random, t254, t254_saved;
 
-    // see design document for details.
-    // Architecture should be changed t oreflect whether we are using a true pipeline or 
-    // just saving the result after each operation. Currently we just save the results, meaning 
-    // (probably) less leakage but no paralaellism.
+
     // Takes in total 7 cycles to compute the result (8 registers, 2 operations are made in parallel).
+    // Each stage contains a calculation, a refresh then storage of the output in an (m+d)-bit register.
     assign t1 = plaintext;
     matrix_mul #(.d(d), .matrix(pow1_mat)) pow2(.out(t2_no_random), .in(t1));
     mul_add_p #(.d(d), .P(P)) mul_add0(.out(t2), .in(t2_no_random), .r(r[0]));

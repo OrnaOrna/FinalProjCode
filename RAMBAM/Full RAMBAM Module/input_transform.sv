@@ -1,3 +1,5 @@
+// Multiplies its input by L, a parameterized matrix representing the isomorphism, thus
+// transferring it to the isomorphic field.
 module input_transform(byte_o, byte_i);
     parameter bit[0:7][0:7] L = `L;
 

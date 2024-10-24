@@ -1,6 +1,6 @@
-
-`include "../sbox_parameters.svh"
-
+// A possible RAMBAM implementation with only a single S-Box, having less algorithmic noise and 
+// being less costly, but taking longer and being more vulnerable. Development of this has stopped 
+// due to time limitations and this module is incomplete.
 module rambam_aes(clk, rst, plaintext, key, random_vect, ciphertext);
     // External parameters
     parameter int d = `d;

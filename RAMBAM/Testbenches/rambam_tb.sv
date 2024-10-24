@@ -1,3 +1,4 @@
+// A testbench for the entire RAMBAM module.
 `timescale 1ns/1ps
 
 interface rambam_aes_if;

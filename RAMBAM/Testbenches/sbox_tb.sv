@@ -1,4 +1,4 @@
-
+// As-simple-as-possible testbench for the sequential RAMBAM S-Box.
 
 `timescale 1ns/1ps
 

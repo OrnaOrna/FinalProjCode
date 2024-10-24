@@ -1,7 +1,7 @@
+// The ShiftRows stage of the AES cipher.
 module shift_rows(state_vec_o, state_vec_i);
     parameter int d = `d;
 
-    // First index - row, second index - column
     input logic [3:0][3:0][0:7+d] state_vec_i;
     output logic [3:0][3:0][0:7+d] state_vec_o;
 

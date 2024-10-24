@@ -1,3 +1,4 @@
+// The AddRoundKey Stage of the AES cipher.
 module add_round_key(state_vec_o, state_vec_i, key);
     parameter int d = `d;
     input logic [3:0][3:0][0:7+d] state_vec_i;

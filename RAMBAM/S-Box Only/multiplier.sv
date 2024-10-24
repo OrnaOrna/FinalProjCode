@@ -1,4 +1,4 @@
-// RAMBAM multiplier, with serial implementation, with no refresh added.
+// RAMBAM multiplier (PQ passed as param), serial implementation, with no refresh added.
 // This could possibly be very hard to analyze, and is moderately expensive. 
 module multiplier(out, p1, p2);
     parameter int d = `d;
@@ -19,6 +19,7 @@ module multiplier(out, p1, p2);
                 assign cout[i] = 0;
             end
             if (i != 7+d)
+                // Simply copies of the modular_shift module layered on top of each other, to perform (m+d) shift-and-reduce operations.
                 modular_shift #(.d(d), .PQ(PQ)) modular_shift_inst(.out(deg[i+1]), .in(deg[i]));
             assign cout[i+1] = cout[i] ^ ({8+d{p1[i]}}&deg[i]);
         end

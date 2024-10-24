@@ -1,8 +1,9 @@
+// Testbench for the serial implementation of the multiplier module
 module serial_mult_tb;
 
     // Parameters
     parameter int d = 8;
-    parameter bit[8+d:0] PQ = {1'b1, 15'b0, 1'b1}; // Example value, adjust as needed
+    parameter bit[8+d:0] PQ = {1'b1, 15'b0, 1'b1}; 
     
 
     // Inputs

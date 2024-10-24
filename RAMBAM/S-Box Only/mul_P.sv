@@ -1,3 +1,4 @@
+// Encodes the (random) input r as a codeword using convolution encoding (simply multiplies by P, passed as a parameter).
 module mul_P(out, r);
     parameter int d = `d;
     parameter bit[0:8] P = `P;
@@ -6,12 +7,13 @@ module mul_P(out, r);
     output logic [0:7+d] out;
     input logic [0:d-1] r;
 
+    // See matrix_mul.sv for an explanation of the transposition trick.
     logic [0:d-1][0:7+d] addend_table;
     logic [0:7+d][0:d-1] addend_table_transposed;
 
-
     genvar i, j;
     generate
+        // The matrix here is simply shifted copies of the polynomial P.
         for (i = 0; i < d; i++) begin
             assign addend_table[i][i +: 9] = P;
             if (i !=  0)

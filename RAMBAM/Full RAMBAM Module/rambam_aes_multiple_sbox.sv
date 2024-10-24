@@ -1,3 +1,6 @@
+// RAMBAM module as in the paper with 16 S-Boxes running in parallel, and additional 4 S-Boxes used for 
+// Key expansion. All params are extracted from ../Include/sbox_parameters {d}.svh
+// See the report for general architecture and state machine.
 module rambam_aes_multiple_sbox(clk, rst, plaintext, key, random_vect, ciphertext, drdy_i, drdy_o);
 
     // External parameters
@@ -5,7 +8,7 @@ module rambam_aes_multiple_sbox(clk, rst, plaintext, key, random_vect, ciphertex
     parameter bit[0:8] P = `P;
     parameter bit[0:d] Q = `Q;
 
-    // Derived parameters (all calculated inside in GLM, sadly)
+    // Derived parameters. 
     localparam bit[0:7+d] PQ = `PQ;
     localparam bit[0:7+d][0:7+d] W = `W;
     localparam bit[0:7+d] w = `w;
@@ -62,6 +65,7 @@ module rambam_aes_multiple_sbox(clk, rst, plaintext, key, random_vect, ciphertex
         generate
             for (i = 0; i < 4; i++) begin : gen_i_t_outer
                 for (j = 0; j < 4; j++) begin : gen_i_t_inner
+                    // The operation inside .byte_i is to extract the correct byte from the input/key
                     input_transform #(.L(L)) input_transformer(.byte_o(transform_input_out[i][j]),
                                                             .byte_i({<<{plaintext[8*i+32*j+:8]}}));
                     mul_add_p #(.d(d), .P(P)) mul_add_input(.out(random_input_out[i][j]),
@@ -260,7 +264,9 @@ module rambam_aes_multiple_sbox(clk, rst, plaintext, key, random_vect, ciphertex
             sbox_ctr <= sbox_ctr_next;
         end
     end
-
+    
+    // A roll of the randomness bus by random_inp (specified at compile-time) positions, used to shift the randomness between S-Box
+    // invocations and between rounds.
     function automatic logic [0:6][0:d-1] shift_randomness;
         input logic [0:6][0:d-1] random_inp;
         input integer shamt;
@@ -271,24 +277,8 @@ module rambam_aes_multiple_sbox(clk, rst, plaintext, key, random_vect, ciphertex
     endfunction
 endmodule
 
-/*
-module register_d_enable(clk, rst, en, in, out);
-    parameter int d = 4;
 
-    input logic clk, rst, en;
-    input logic [0:7+d] in;
-    output logic [0:7+d] out;
-
-    always_ff @(posedge clk, posedge rst) begin
-        if (rst) begin
-            out <= '0;
-        end else if (en) begin
-            out <= in;
-        end
-    end
-endmodule
-*/
-
+// Simple register with async reset and enable for storing a state vector. Used in between stages.
 module register_state(clk, rst, en, in, out);
     parameter int d = `d;
 

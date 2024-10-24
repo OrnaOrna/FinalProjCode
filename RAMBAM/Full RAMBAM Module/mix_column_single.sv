@@ -1,3 +1,5 @@
+// Mixes a single column of the state vector. Takes a matrix rep of multiplication by 
+// L(2) as parameter.
 module mix_column_single(column_o, column_i);
     parameter int d = 4;
     parameter bit [0:7+d][0:7+d] L_two = '{default:0};
@@ -6,7 +8,7 @@ module mix_column_single(column_o, column_i);
     output logic [3:0][0:7+d] column_o;
     input logic [3:0][0:7+d] column_i;
 
-    // The mixcoluns matrix as defined in AES (for comparisons)
+    // The mixcoluns matrix as defined in AES (for param extraction)
     localparam int mds_matrix[0:3][0:3] = '{
         {2, 3, 1, 1},
         {1, 2, 3, 1},
@@ -50,6 +52,8 @@ module mix_column_single(column_o, column_i);
         end
     endfunction
 
+
+    // Returns the identity matrix of size (m+d)x(m+d)
     function static bit[0:7+d][0:7+d] ident_matrix();
         ident_matrix = '0;
         for (int i = 0; i < 8 + d; i++) begin

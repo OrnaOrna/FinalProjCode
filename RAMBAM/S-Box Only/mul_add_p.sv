@@ -1,4 +1,5 @@
-// Implementation as in the RAMBAM paper. As we've talked with Osnat about, this implementation has a weakness (probably, untested)
+// Takes an input and adds to it a random codeword, with the randomness provided as an input.
+// Any implementation of mul_P can be used (both the systematic and the convolution encoder).
 module mul_add_p(out, in, r);
     parameter int d = `d;
     parameter bit[0:8] P = `P;

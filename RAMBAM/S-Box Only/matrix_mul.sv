@@ -1,4 +1,4 @@
-// Status: compiles, not yet debugged
+// Multiplies the input by an (m+d)x(m+d) matrix provided as a parameter.
 module matrix_mul(
     in, out
 );
@@ -8,6 +8,8 @@ module matrix_mul(
     input logic [0:7+d] in;
     output logic [0:7+d] out;
 
+    // AFAIK, SystemVerilog does not allow slicing a column of an array, so we must use a trick where we transpose the matrix, then
+    // slice the row of the transposed matrix. After calculating the result, we have to transpose it back.
     logic [0:7+d][0:7+d] matrix_transposed;
     genvar i,j;
     generate

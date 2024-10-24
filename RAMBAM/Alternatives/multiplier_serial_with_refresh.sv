@@ -1,4 +1,4 @@
-// RAMBAM multiplier, with serial implementation, with refresh added after each atomic operation both
+// RAMBAM multiplier (PQ passed as param), with serial implementation, with refresh added after each atomic operation both
 // to the accumulator and to the shifter. Note the significant use of randomness here and the added cost.
 // of 2 matrix multipliers.
 module multiplier(clk, rst, drdy_i, drdy_o, out, p1, p2, random_vect);
@@ -13,11 +13,14 @@ module multiplier(clk, rst, drdy_i, drdy_o, out, p1, p2, random_vect);
     input logic clk, rst, drdy_i;
     output logic drdy_o;
 
+    // Accumulator holds during the i'th CC the sum up to p2_i. Shifter
+    // holds p1 shifted and reduced i times.
     logic [0:7+d] accumulator, accumulator_next, shifter, refresh_shifter, refresh_accumulator;
     logic [0:$clog2(9+d)-1] shift_counter, shift_counter_next, shift_counter_capped;
+    // Whether to continue counting or not. This is a very simple implementation of a state machine.
     logic active;
 
-
+    // State transitions
     always_ff @(posedge clk or posedge rst) begin
         if (rst) begin
             accumulator <= '0;
@@ -39,6 +42,9 @@ module multiplier(clk, rst, drdy_i, drdy_o, out, p1, p2, random_vect);
         end
     end
 
+    // Cap the counter so that no access to illegal data is made during the final
+    // clock cycle. This datum is not used anyway, but to avoid synthesis errors
+    // This safeguard is in place
     always_comb begin
         out = accumulator;
         if (shift_counter == 8+d) begin
@@ -52,6 +58,7 @@ module multiplier(clk, rst, drdy_i, drdy_o, out, p1, p2, random_vect);
     assign shift_counter_next = shift_counter + 1;
     assign accumulator_next = accumulator ^ refresh_accumulator ^ ({8+d{p1[shift_counter_capped]}} & shifter);
     assign shifter_next = {1'b0, shifter[1:7+d]} ^ refresh_shifter ^ ({8+d{shifter[7+d]}} & PQ[0:7+d]);
+    // These are the only additions from the version with no added refresh.
     mul_P #(.d(d), .P(P)) acc_refresher (.out(refresh_accumulator), .r(random_vect[shift_counter_capped]));
     mul_P #(.d(d), .P(P)) shf_refresher (.out(refresh_shifter), .r(random_vect[shift_counter_capped+(8+d)]));
 endmodule

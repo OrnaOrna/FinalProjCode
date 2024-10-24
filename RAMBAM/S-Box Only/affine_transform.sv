@@ -1,4 +1,4 @@
-// Status: compiles, not yet debugged
+// Affine transformation module. Simply multiplies by the parameterized matrix then adds the parameterized vector.
 module affine_transform(
     in, out
 );

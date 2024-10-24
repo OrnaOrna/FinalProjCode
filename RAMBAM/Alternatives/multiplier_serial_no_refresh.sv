@@ -1,4 +1,4 @@
-// RAMBAM multiplier, with serial implementation, with no refresh added.
+// RAMBAM multiplier (PQ passed as param), with serial implementation, with no refresh added.
 // This is probably very cheap, but very vulnerable to SCA.
 module multiplier(clk, rst, drdy_i, drdy_o, out, p1, p2);
     parameter int d = `d;
@@ -11,11 +11,14 @@ module multiplier(clk, rst, drdy_i, drdy_o, out, p1, p2);
     input logic clk, rst, drdy_i;
     output logic drdy_o;
 
+    // Accumulator holds during the i'th CC the sum up to p2_i. Shifter
+    // holds p1 shifted and reduced i times.
     logic [0:7+d] accumulator, accumulator_next, shifter, shifter_next;
     logic [0:$clog2(9+d)-1] shift_counter, shift_counter_next, shift_counter_capped;
+    // Whether to continue counting or not. This is a very simple implementation of a state machine.
     logic active;
 
-
+    // State transitions
     always_ff @(posedge clk or posedge rst) begin
         if (rst) begin
             accumulator <= '0;
@@ -37,6 +40,9 @@ module multiplier(clk, rst, drdy_i, drdy_o, out, p1, p2);
         end
     end
 
+    // Cap the counter so that no access to illegal data is made during the final
+    // clock cycle. This datum is not used anyway, but to avoid synthesis errors
+    // This safeguard is in place
     always_comb begin
         out = accumulator;
         if (shift_counter == 8+d) begin

@@ -1,3 +1,4 @@
+// A simple (m+d)-bit register, with async reset. Used multiple times in the S-Box.
 module register_d(out, in, clk, rst);
     parameter int d = `d;
 

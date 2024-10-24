@@ -1,3 +1,6 @@
+// Key expansion sub-module for the RAMBAM cipher. Reads params from the same file as the main module.
+// Contains 4 S-Boxes in parallel.
+// See the report for general architecture and state machine.
 module key_expansion(clk, rst, out, in, r, drdy_i, drdy_o, first_round);
     parameter int d = `d;
     parameter bit [0:8] P = `P;
@@ -38,7 +41,8 @@ module key_expansion(clk, rst, out, in, r, drdy_i, drdy_o, first_round);
 
 
 
-    // Transpose inputs and outputs
+    // Transpose inputs and outputs, to work on rows of the state vector (more natural)
+    // instead of on columns (the actual words)
     generate 
         for (i = 0; i < 4; i++) begin : gen_transpose_inout_o
             for (j = 0; j < 4; j++) begin : gen_transpose_inout_i
@@ -164,6 +168,7 @@ module key_expansion(clk, rst, out, in, r, drdy_i, drdy_o, first_round);
     end
 endmodule
 
+// Simple register with async reset and enable for storing a state vector. Used in between stages.
 module register_word(clk, rst, en, in, out);
     parameter int d = `d;
 
