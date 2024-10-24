@@ -1,0 +1,464 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass heb-article
+\begin_preamble
+\usepackage{xcolor}
+
+\defaultfontfeatures{Ligatures =TeX}
+\setmainfont{David CLM}
+\newfontfamily\englishfont{Latin Modern Roman}[Script=Latin,Language=English]
+\newfontfamily\englishfonttt{Latin Modern Mono}[Script=Latin,Language=English]
+\newfontfamily\englishfontsf{Latin Modern Sans}[Script=Latin,Language=English]
+\newfontfamily\hebrewfont{David CLM}[Script=Hebrew]
+\newfontfamily\hebrewfonttt{Miriam Mono CLM}[Script=Hebrew]
+\newfontfamily\hebrewfontsf{DejaVu Sans}[Script=Hebrew]
+\setmathrm{Latin Modern Roman}
+\AtBeginDocument{\rightfootnoterule} % footrule direction (Polyglossia documentation - section 9)
+\renewcommand\labelitemi{\fontfamily{cmr}\fontencoding{T1}\selectfont\textbullet} % the font David CLM does not has \textbullet
+% code for hebrew quotation marks
+\let\lyx@right@quotemarks”
+\let\lyx@left@quotemarks“
+\catcode`\“=13
+\catcode`\”=13
+\let“\lyx@right@quotemarks
+\let”„
+\AtBeginDocument{%
+	\addto\captionsenglish{\let”\lyx@right@quotemarks}
+	\addto\captionsenglish{\let“\lyx@left@quotemarks}
+	\addto\captionshebrew{\let”\lyx@right@quotemarks}
+	\addto\captionshebrew{\let”„}
+}
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language hebrew
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts true
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement H
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 3cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+סיכום על
+\family roman
+\series medium
+\shape up
+\size largest
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+\lang english
+TVLA
+\end_layout
+
+\begin_layout Standard
+נושאים במאמר:
+\end_layout
+
+\begin_layout Enumerate
+הקדמה, מוטיבציה ועקרונות: אין מתודולוגיה ידועה לבדיקת בטיחות מול התקפות
+ ערוצי צד של מכשיר, ולכן רוצים לפתח אחת שתבטיח לנו בטיחות לכל מכשיר.
+ הבדיקה צריכה להיות מול כל המתקפות האפשריות, כולל אלה שעוד לא הומצאו, וצריכה
+ להשתמש בסטטיסטיקה.
+ צריך שיהיה אפשרי לשחזר את התוצאות במהירות ובזול.
+\end_layout
+
+\begin_layout Enumerate
+סקירת המתודולוגיה המוצעת.
+ מציגים דרישות מהיצרן של המכשיר ומידע שהוא צריך לספק למבצע הבדיקה, ודרישות
+ ממבצע הבדיקה עצמה לגבי האיסוף של הטרייסים והעיבוד שלהם – עיבוד מקדים ויישור.
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+חלק פחות חשוב – הסטאפ החשמלי של איסוף הטרייסים.
+\end_layout
+
+\begin_layout Enumerate
+חלק יותר חשוב – כמה טרייסים נאספים, כמה דגימות יש בכל טרייס ומה הרזולוציה
+ של הסקופ.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+סקירת המבחן הסטטיסטי שמבצעים בבדיקה, והרציונל – עושים
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+\lang english
+ttest
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang hebrew
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ומבצעים כל בדיקה פעמיים על
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\numeric on
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+2
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\numeric off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+דאטאבייסים בלתי תלויים ע
+\begin_inset Quotes erd
+\end_inset
+
+מ למנוע
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+\lang english
+false positives
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang hebrew
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+)יחסית חשוב(.
+ 
+\end_layout
+
+\begin_layout Enumerate
+מבחנים מוצעים ספציפיים עבור מימוש של
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+\lang english
+AES
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang hebrew
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+– פחות חשוב.
+\end_layout
+
+\begin_layout Enumerate
+הדגמת המבחנים המוצעים על
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+\lang english
+AES
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang hebrew
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+על כמה מכשירי בוחן שונים – עוד פחות חשוב.
+\end_layout
+
+\begin_layout Enumerate
+סיכום המאמר.
+\end_layout
+
+\end_body
+\end_document

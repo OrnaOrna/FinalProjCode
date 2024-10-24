@@ -1,0 +1,31 @@
+\begin{tikzpicture}[->,>=stealth,shorten >=1pt,auto,node distance=3cm and 2cm, semithick, scale=0.6]
+
+    \tikzstyle{state}=[draw=black,thick,fill=white,minimum size=1.5cm,align=center, ellipse]
+
+    % Nodes (states)
+    \node[state] (IDLE) {IDLE};
+    \node[state] (PrepData) [below of=IDLE] {PrepData};
+    \node[state] (AddRoundKey) [below of=PrepData] {AddRoundKey};
+    \node[state] (SubBytes) [below right of=AddRoundKey, node distance = 3.5cm] {SubBytes};
+    \node[state] (ShiftRows) [below of=SubBytes] {ShiftRows};
+    \node[state] (MixColumns) [below left of=ShiftRows, node distance = 3.5cm] {MixCols};
+    \node[state] (AddRoundKeyLast) [below right of=ShiftRows, node distance=3.5cm] {{AddRoundKeyLast}};
+    \node[state] (Mn2) [below of=AddRoundKeyLast] {{$\mathrm{mod}~P$}};
+    \node[state] (PrepOutput) [below of=Mn2] {{$L^{-1}$}};
+
+    % Edges (transitions)
+    \path (IDLE) [loop above = 90] edge node [above] {{$\overline{\mathrm{trigger}}$}} (IDLE);
+    \path (IDLE) edge node [right] {trigger} (PrepData);
+    \path (PrepData) edge (AddRoundKey);
+    \path (AddRoundKey) edge (SubBytes);
+    \path (SubBytes) [loop right = 90] edge node [right] {{$\overline{sbox\_ctr}$}} (SubBytes);
+    \path (SubBytes) edge node [right] {{$sbox\_ctr$}} (ShiftRows);
+    \path (ShiftRows) edge node [left] {{$round\ne 10$}} (MixColumns);
+    \path (ShiftRows) edge node [right] {{$round=10$}} (AddRoundKeyLast);
+    \path (MixColumns) edge (AddRoundKey);
+    
+    \path (AddRoundKeyLast) edge (Mn2);
+    \path (Mn2) edge (PrepOutput);
+    \path (PrepOutput) [bend left = 60] edge (IDLE);
+
+\end{tikzpicture}

@@ -1,0 +1,19 @@
+\begin{tikzpicture}[->,>=stealth,shorten >=1pt,auto,node distance=3cm and 2cm, semithick, scale=0.8]
+
+    \tikzstyle{state}=[draw=black,thick,fill=white,minimum size=1.5cm,align=center, ellipse]
+
+    % Nodes (states)
+    \node[state] (IDLE) {IDLE};
+    \node[state] (SubWord) [below of=IDLE] {SubWord};
+    \node[state] (Xor) [below of=SubWord] {XOR};
+    \node[state] (OUT) [below of=Xor] {{$\underset{drdy\_o=1}{\mathrm{OUT}}$}};
+
+    % Edges (transitions)
+    \path (IDLE) [loop above = 90] edge node [above] {{$\overline{{drdy\_i}}$}} (IDLE);
+    \path (IDLE) edge node [right] {{${drdy\_i}$}} (SubWord);
+    \path (SubWord) [loop right = 90] edge node [right] {{$\overline{sbox\_ctr}$}} (SubWord);
+    \path (SubWord) edge node [right] {{$sbox\_ctr$}} (Xor);    
+    \path (Xor) edge (OUT);
+    \path (OUT) [bend left = 60] edge (IDLE);
+
+\end{tikzpicture}
