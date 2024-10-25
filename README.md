@@ -1,7 +1,8 @@
 # A Hardware Implementation & Side Channel Analysis of the RAMBAM and CLM Masking Schemes: Project Code Repository
 This is accompanying code for the 4th year engineering final project of Yair Oren and Dan Michaeli, under supervision of Dr. Itamar Levi and Prof. Osnat Keren. It contains all hardware code written by us, as well as software code we used for simulation of the implemented systems and for side-channel analysis, and the LyX file of the final report. 
 
-#### The repository is organized as follows:
+
+## Repository Structure
 - `Framework/`: The hardware framework files for interfacing our module with the board and chip. This code is for the slave FPGA only; code for the master FPGA was used completely unaltered and can be found at [SASEBO Project's Site](https://www.risec.aist.go.jp/project/sasebo/) under SASEBO GIII.
 - `RAMBAM/`: SystemVerilog implementation of the RAMBAM masking scheme:
     - `S-Box Only/` code for the `SubBytes` stage of the cipher only.
