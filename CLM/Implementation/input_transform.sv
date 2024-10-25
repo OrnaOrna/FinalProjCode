@@ -1,3 +1,5 @@
+// Multiplies its input by L, an *input* matrix representing the isomorphism, thus
+// transferring it to the isomorphic field.
 `include "clm_typedefs.svh"
 import types::*;
 

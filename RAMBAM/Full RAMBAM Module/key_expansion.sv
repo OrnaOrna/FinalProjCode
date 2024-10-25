@@ -168,7 +168,7 @@ module key_expansion(clk, rst, out, in, r, drdy_i, drdy_o, first_round);
     end
 endmodule
 
-// Simple register with async reset and enable for storing a state vector. Used in between stages.
+// Simple register with async reset and enable for storing a state word. Used in between stages.
 module register_word(clk, rst, en, in, out);
     parameter int d = `d;
 

@@ -1,3 +1,5 @@
+// Affine transformation module. Simply multiplies by the input matrix then adds the input vector.
+
 `include "clm_typedefs.svh"
 import types::*;
 

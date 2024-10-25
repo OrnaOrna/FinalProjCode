@@ -1,3 +1,6 @@
+// CLM multiplier (PQ passed as input), serial implementation, with no refresh added.
+// This could possibly be very hard to analyze, and is moderately expensive. 
+
 `include "clm_typedefs.svh"
 import types::*;
 
@@ -8,7 +11,7 @@ module multiplier(out, p1, p2, PQ);
     output state_t out;
     input state_t p1, p2, PQ;
 
-    // see design document for details
+    // see report for details
     state_t cout[0:8+d];
     state_t deg[0:7+d];
     genvar i;

@@ -1,3 +1,4 @@
+// The ShiftRows stage of the AES cipher.
 `include "clm_typedefs.svh"
 import types::*;
 

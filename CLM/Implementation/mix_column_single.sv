@@ -1,3 +1,6 @@
+// Mixes a single column of the state vector. Takes a matrix rep of multiplication by 
+// L(2) as input.
+
 `include "clm_typedefs.svh"
 import types::*;
 

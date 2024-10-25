@@ -1,8 +1,8 @@
+// Performs a multiplication by x (shift) then reduction modulo poly
 `include "clm_typedefs.svh"
 import types::*;
 
 
-// Performs a multiplication by x then reduction modulo poly
 module modular_shift(out, in, poly);
     parameter int d = d;
 

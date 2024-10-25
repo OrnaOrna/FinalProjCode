@@ -1,3 +1,7 @@
+// CLM module with 16 S-Boxes running in parallel, and additional 4 S-Boxes used for 
+// Key expansion. DEFINITELY NOT FINAL, does not include as of yet
+// parameter extraction for all parameters and correct randomization inputs.
+// See the report for general architecture and state machine.
 `include "clm_typedefs.svh"
 import types::*;
 

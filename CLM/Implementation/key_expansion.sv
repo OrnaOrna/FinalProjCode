@@ -2,6 +2,9 @@
 import types::*;
 
 
+// Key expansion sub-module for the CLM cipher. Reads params from the same file as the main module.
+// Contains 4 S-Boxes in parallel.
+// See the report for general architecture and state machine.
 module key_expansion(inouts, params);
     parameter int d = d;
 
@@ -153,6 +156,7 @@ module key_expansion(inouts, params);
     end
 endmodule
 
+// Simple register with async reset and enable for storing a state word. Used in between stages.
 module register_word(clk, rst, en, in, out);
     parameter int d = 4;
 

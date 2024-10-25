@@ -1,3 +1,8 @@
+// Extracts parameters dependent on P to a params interface.
+// The values for these parameters come from the included files.
+// Check report for which parameters are extracted via LUT and
+// which via logic.
+
 `include "clm_typedefs.svh"
 `include "allL.svh"
 `include "allP.svh"
@@ -187,7 +192,8 @@ module p_param_extractor(p_det, params);
         end
     endgenerate
 
-    // For B, using degenerate instances of modular_shift
+    // For B, using degenerate instances of modular_shift,
+    // as rows are simply powers of x modulo P
     assign params.B[0][0:7+d] = params.P;
     generate
         for (i = 1; i < d; i++) begin

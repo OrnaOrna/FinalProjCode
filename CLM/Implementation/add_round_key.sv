@@ -1,3 +1,4 @@
+// The AddRoundKey Stage of the AES cipher.
 `include "clm_typedefs.svh"
 import types::*;
 

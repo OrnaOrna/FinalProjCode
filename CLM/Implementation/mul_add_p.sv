@@ -1,3 +1,5 @@
+// Takes an input and adds to it a random codeword, with the randomness provided as an input.
+// Any implementation of mul_P can be used (both the systematic and the convolution encoder).
 `include "clm_typedefs.svh"
 import types::*;
 

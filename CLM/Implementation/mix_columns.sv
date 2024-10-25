@@ -1,3 +1,5 @@
+// The MixColumns stage of the AES cipher.
+
 `include "clm_typedefs.svh"
 import types::*;
 
@@ -5,14 +7,12 @@ import types::*;
 module mix_columns(out, in, L2);
     parameter int d = d;
 
-    // First index - row, second index - column
     input state_vec_t in;
     output state_vec_t out;
     input rr_matrix_t L2;
 
 
-    // We need to transpose the input, then apply a mix-columns opearation on
-    // each column, and then transpose the result back (because of the way indexing works in SystemVerilog)
+    // See matrix_mul.sv for an explanation of the transposition trick.
     state_vec_t in_transposed;
     state_vec_t out_transposed;
 
@@ -27,6 +27,7 @@ module mix_columns(out, in, L2);
     endgenerate
     generate
         for (k = 0; k < 4; k++) begin
+            // One module for each column
             mix_column_single #(.d(d)) mixer(.out(out_transposed[k]),
                                              .in(in_transposed[k]),
                                              .L2(L2));

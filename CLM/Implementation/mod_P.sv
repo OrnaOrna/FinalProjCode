@@ -1,3 +1,4 @@
+// Reduces its input modulo P, in essence calculating the systematic syndrome.
 `include "clm_typedefs.svh"
 import types::*;
 

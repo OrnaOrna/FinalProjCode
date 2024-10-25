@@ -1,3 +1,7 @@
+// Sequential CLM S-Box implementation, with registers after each combinatorial stage, to "emulate" 
+// RAMBAM's software implementation. Registers help with slowing down the computation and increasing the SNR
+// to make attacks actually significant and not highly noise-sensitive.
+
 `include "clm_typedefs.svh"
 import types::*;
 
@@ -70,7 +74,9 @@ module clm_sbox(inouts, params);
     
 
 
-    // State machine
+    // Very very simple state machine, being in essence a pipeline
+    // without pipelining. This is a lesson from the RAMBAM module
+    // which does not have one, and is hard to interface with.
     always_comb begin
         inouts.drdy_o = 1'b0;
         case (stage_ctr)
@@ -99,6 +105,7 @@ module clm_sbox(inouts, params);
     end
 endmodule
 
+// A simple (m+d)-bit register, with async reset. Used multiple times in the S-Box.
 module register_d(out, in, clk, rst, en);
     parameter int d = d;
 

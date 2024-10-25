@@ -1,3 +1,6 @@
+// Encodes the (random) input r as a codeword. M can be any matrix,
+// but in the standard implementation it is the convolution gen matrix.
+
 `include "clm_typedefs.svh"
 import types::*;
 
