@@ -1,7 +1,7 @@
 `ifndef CLM_TYPEDEFS_SVH
 `define CLM_TYPEDEFS_SVH
 
-`define d 4
+`define d 7
 
 
 package types;

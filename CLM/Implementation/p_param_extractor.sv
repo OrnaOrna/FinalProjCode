@@ -3,8 +3,6 @@
 `include "allP.svh"
 `include "allLinv.svh"
 `include "allW11.svh"
-`include "allW21 4.svh"
-`include "allw 4.svh"
 
 import types::*;
 

@@ -50,7 +50,7 @@ module LBUS_IF
 
    // Block cipher
    output [127:0] blk_kin;
-   output [511:0] blk_din;
+   output [495:0] blk_din;
    input  [127:0] blk_dout;
    output         blk_krdy, blk_drdy;
    input          blk_kvld, blk_dvld;
@@ -64,7 +64,7 @@ module LBUS_IF
    reg [15:0]    lbus_do;
 
    reg [127:0]   blk_kin;
-   reg [511:0]   blk_din;
+   reg [495:0]   blk_din;
    reg           blk_krdy;
    reg [127:0] 	 blk_dout_reg;
    wire          blk_drdy;
@@ -132,8 +132,6 @@ module LBUS_IF
       end else if (trig_wr) begin
         case (lbus_a)
             16'h000C: blk_encdec <= lbus_di[0];
-            
-            
             16'h0100: blk_kin[127:112] <= lbus_di;
             16'h0102: blk_kin[111: 96] <= lbus_di;  
             16'h0104: blk_kin[ 95: 80] <= lbus_di;  
@@ -143,7 +141,6 @@ module LBUS_IF
             16'h010C: blk_kin[ 31: 16] <= lbus_di;     
             16'h010E: blk_kin[ 15:  0] <= lbus_di;
             
-            16'h0124: blk_din[511:496] <= lbus_di;
             16'h0126: blk_din[495:480] <= lbus_di;
             16'h0128: blk_din[479:464] <= lbus_di;
             16'h012A: blk_din[463:448] <= lbus_di;

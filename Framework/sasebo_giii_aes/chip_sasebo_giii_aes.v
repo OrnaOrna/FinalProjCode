@@ -65,7 +65,7 @@ module CHIP_SASEBO_GIII_AES
    
    // Block cipher
    wire [127:0] blk_kin;
-   wire [511:0] blk_din;
+   wire [495:0] blk_din;
    wire [127:0] blk_dout;
    wire         blk_krdy, blk_kvld, blk_drdy, blk_dvld;
    wire         blk_encdec, blk_en, blk_rstn, blk_busy;
