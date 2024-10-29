@@ -1,15 +1,19 @@
-// Mixes a single column of the state vector. Takes a matrix rep of multiplication by 
-// L(2) as input.
+// Mixes a single column, refreshing the randomness for each element
+// in the CLM style.
 
 `include "clm_typedefs.svh"
 import types::*;
 
-module mix_column_single(out, in, L2);
+
+module mix_column_single(out, in, random_vect, L, B_ext_MC, MC);
     parameter int d = d;
 
     output state_word_t out;
     input state_word_t in;
-    input rr_matrix_t L2;
+    input red_poly_t[0:15] random_vect;
+    input mm_matrix_t L;
+    input bm_matrix_t B_ext_MC;
+    input mr_matrix_t MC;
 
 
     // The mixcoluns matrix as defined in AES (for comparison and extraction)
@@ -27,11 +31,23 @@ module mix_column_single(out, in, L2);
     generate
         for (i = 0; i < 4; i++) begin : gen_mix_o
             for (j = 0; j < 4; j++) begin : gen_mix_i
-                matrix_mul #(.d(d)) mixer (
-                    .in(in[j]),
-                    .out(partial_products[i][j]),
-                    .matrix(get_mc_matrix(mds_matrix[i][j]))
-                );
+                if (mds_matrix[i][j] == 1) begin
+                    mul_add_p(.out(partial_products[i][j]),
+                            .in(in[j]), .r(random_vect[4*i+j]),
+                            .M(MC));
+                end else if (mds_matrix[i][j] == 2) begin
+                    mul_L2 mul_L2_inst(.out(partial_products[i][j]),
+                                       .in(in[j]), .r(random_vect[4*i+j]),
+                                       .L(L), .B_ext_MC(B_ext_MC));
+                end else if (mds_matrix[i][j] == 3) begin
+                    state_t temp;
+                    mul_L2 mul_L2_inst(.out(temp),
+                                       .in(in[j]), .r(random_vect[4*i+j]),
+                                       .L(L), .B_ext_MC(B_ext_MC));
+                    assign partial_products[i][j] = temp ^ in[j];
+                end else begin
+                    assign partial_products[i][j] = '0;
+                end
             end
 
             // There is no reduction operator that works only on a single dimension,
@@ -42,27 +58,5 @@ module mix_column_single(out, in, L2);
                                  partial_products[i][3];
         end
     endgenerate
-
-    // Takes number (i.e. polynomial) from the MDS matrix, returns its representation
-    // in the ring as a matrix of multiples
-    function automatic rr_matrix_t get_mc_matrix(input int no);
-        if (no == 1) begin
-            get_mc_matrix = ident_matrix();
-        end else if (no == 2) begin
-            get_mc_matrix = L2;
-        end else if (no == 3) begin
-            get_mc_matrix = L2 ^ ident_matrix();
-        end else begin
-            get_mc_matrix = '0;
-        end
-    endfunction
-
-    // Generates an identity matrix of size m+d x m+d
-    function automatic rr_matrix_t ident_matrix();
-        ident_matrix = '0;
-        for (int i = 0; i < 8 + d; i++) begin
-            ident_matrix[i][i] = 1;
-        end
-    endfunction
 endmodule
 

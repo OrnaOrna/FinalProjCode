@@ -1,7 +1,3 @@
-// typedefs, interfaces and enums used by the CLM. A good lesson I learned from the messy code that
-// RAMBAM is is that typedefs and interfaces for common busses are important, and packages are 
-// a very useful thing.
-
 `ifndef CLM_TYPEDEFS_SVH
 `define CLM_TYPEDEFS_SVH
 
@@ -26,6 +22,9 @@ package types;
     typedef logic[0:7][0:7+d] mr_matrix_t;
     typedef logic[0:7+d][0:7] rm_matrix_t;
     typedef logic[0:7+d][0:7+d] rr_matrix_t;
+    typedef logic[0:2*(8+d-1)-8][0:7] nm_matrix_t;
+    typedef logic[0:6+d][0:7] bm_matrix_t;
+
 
     typedef logic [0:3][0:3][0:7] aes_state_t;
     typedef state_t [0:3][0:3] state_vec_t;
@@ -47,7 +46,6 @@ interface clm_inouts_if;
         output ciphertext, drdy_o
     );
 endinterface
-
 
 // Inouts for the key expansion submodule
 interface ke_inouts_if;
@@ -89,40 +87,34 @@ interface params_if;
     parameter int d = d;
 
     base_poly_t P;
-    red_poly_t Q;
-    state_t PQ;
 
     mm_matrix_t L;
-    mm_matrix_t L_inv;
-    rr_matrix_t L2;
+    mm_matrix_t Linv;
+
     dm_matrix_t B;
+    nm_matrix_t B_ext;
+    bm_matrix_t B_ext_MC;
+
+
     mr_matrix_t MC;
     dd_matrix_t T11;
     dm_matrix_t T21;
     rr_matrix_t T;
     state_t t;
 
-    rr_matrix_t M2;
-    rr_matrix_t M4;
-    rr_matrix_t M16;
 
-    // The modport used by the parameter extraction module dependent on P
     modport ext_p (
-        output P, L, L_inv, B, MC,
-        // change maybe later
-        input T11, T21,
-        // Unused
-        input Q, PQ, T, t, M2, M4, M16, L2
+        output P, L, Linv, B, MC, B_ext, B_ext_MC, T, T11, T21, t
     );
 
-    // The modport used by the S-Box
     modport in_use (
         // In use
-        input P, Q, PQ, L, B, MC, T, t, M2, M4, M16,
+        input P, L, B, MC, T, t, B_ext, B_ext_MC,
         // Unused
-        input L_inv, T11, T21, L2
+        input Linv, T11, T21
     );
 endinterface
+
 
 // Same as in RAMBAM, with an added stage.
 `define ROUND_BITS 4
@@ -141,4 +133,5 @@ typedef enum logic[`SBOX_BITS-1:0] {POW2, MUL1, POW4, MUL2, POW16, MUL3, AFF} sb
 
 typedef logic[`ROUND_BITS-1:0] round_ctr_t;
 
-`endif // CLM_TYPEDEFS_SVH
+
+`endif

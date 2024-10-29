@@ -1,15 +1,19 @@
-// The MixColumns stage of the AES cipher.
-
+// MixCols in the CLM style. The randomness is the same for all columns -- this may
+// cause a vulnerability.
 `include "clm_typedefs.svh"
 import types::*;
 
 
-module mix_columns(out, in, L2);
+module mix_columns(out, in, random_vect, L, B_ext_MC, MC);
     parameter int d = d;
 
+    // First index - row, second index - column
     input state_vec_t in;
+    input red_poly_t[0:15] random_vect;
     output state_vec_t out;
-    input rr_matrix_t L2;
+    input mm_matrix_t L;
+    input bm_matrix_t B_ext_MC;
+    input mr_matrix_t MC;
 
 
     // See matrix_mul.sv for an explanation of the transposition trick.
@@ -27,10 +31,12 @@ module mix_columns(out, in, L2);
     endgenerate
     generate
         for (k = 0; k < 4; k++) begin
-            // One module for each column
-            mix_column_single #(.d(d)) mixer(.out(out_transposed[k]),
-                                             .in(in_transposed[k]),
-                                             .L2(L2));
+                // One module for each column
+            mix_column_single mixer(.out(out_transposed[k]),
+                                    .in(in_transposed[k]),
+                                    .random_vect(random_vect),
+                                    .L(L), .B_ext_MC(B_ext_MC),
+                                    .MC(MC));
         end
     endgenerate
 endmodule
