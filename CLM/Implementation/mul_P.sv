@@ -8,7 +8,7 @@ module mul_P(out, r, M);
     parameter int d = d;
 
     input red_poly_t r;
-    output state_t [0:d-1] out;
+    output state_t out;
 
     input mr_matrix_t M;
 

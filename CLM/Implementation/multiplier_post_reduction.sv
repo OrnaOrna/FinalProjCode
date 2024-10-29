@@ -17,7 +17,7 @@ module multiplier(out, p1, p2, r, B_ext);
     logic [0:6+d] overflow_sum;
     
     // Calculate the partial products
-    genvar i;
+    genvar i, j;
     generate
         for (i = 0; i < 8+d; i++) begin
             if (i != 0) begin
@@ -33,7 +33,11 @@ module multiplier(out, p1, p2, r, B_ext);
     // xor over the rows to get the top bits (possible trick with matrix transposition required for compilation)
     generate
         for (i = 0; i < 7+d; i++) begin
-            assign overflow_sum[i] = ^(partial_products[0:7+d][8+d+i]);
+            logic[0:7+d] column;
+            for (j = 0; j < 7+d; j++) begin
+                assign column[j] = partial_products[j][8+d+i];
+            end
+            assign overflow_sum[i] = ^(column);
         end
     endgenerate
 
@@ -41,8 +45,13 @@ module multiplier(out, p1, p2, r, B_ext);
     // concatenation from the LEFT means lower bits, this is where we should add the refresh
     logic [0:7+d] reduction_term;
     generate
+
         for (i = 0; i < 8; i++) begin
-            assign reduction_term[i] = ^({r, overflow_sum} & B_ext[0:0+6+2*d][i]);
+            logic [0:6+2*d] column;
+            for (j = 0; j < 7+2*d; j++) begin
+                assign column[j] = B_ext[j][i];
+            end
+            assign reduction_term[i] = ^({r, overflow_sum} & column);
         end
     endgenerate
     assign reduction_term[8:7+d] = r;
@@ -50,7 +59,11 @@ module multiplier(out, p1, p2, r, B_ext);
     // Calculate the final output using both the refresh and the sum of the partial products
     generate
         for (i = 0; i < 8+d; i++) begin
-            assign out[i] = reduction_term[i] ^ (^(partial_products[0:7+d][i]));
+            logic [0:7+d] column;
+            for (j = 0; j < 7+d; j++) begin
+                assign column[j] = partial_products[j][i];
+            end
+            assign out[i] = reduction_term[i] ^ (^column);
         end
     endgenerate
 endmodule

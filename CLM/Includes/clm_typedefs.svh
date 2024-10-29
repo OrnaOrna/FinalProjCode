@@ -3,7 +3,6 @@
 
 `define d 4
 
-import types::*;
 
 package types;
     // m = 8, d is a parameter, r = m+d
@@ -30,6 +29,8 @@ package types;
     typedef state_t [0:3][0:3] state_vec_t;
     typedef state_t [0:3] state_word_t;
 endpackage
+
+import types::*;
 
 // Inouts for the main CLM module. Does not include anything
 // new for CLM, such as the random inputs or P.
@@ -68,7 +69,7 @@ interface sbox_inouts_if;
     parameter int d = d;
 
 
-    state_word_t in, out;
+    state_t in, out;
     red_poly_t [0:6] r;
     logic clk, rst;
     logic drdy_i, drdy_o;
@@ -95,9 +96,8 @@ interface params_if;
     nm_matrix_t B_ext;
     bm_matrix_t B_ext_MC;
 
-
     mr_matrix_t MC;
-    dd_matrix_t T11;
+    mm_matrix_t T11;
     dm_matrix_t T21;
     rr_matrix_t T;
     state_t t;

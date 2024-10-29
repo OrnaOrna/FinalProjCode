@@ -1,14 +1,12 @@
-// Extracts parameters dependent on P to a params interface.
-// The values for these parameters come from the included files.
-// Check report for which parameters are extracted via LUT and
-// which via logic.
-
 `include "clm_typedefs.svh"
 `include "allL.svh"
 `include "allP.svh"
+`include "allLinv.svh"
+`include "allW11.svh"
+`include "allW21 4.svh"
+`include "allw 4.svh"
 
 import types::*;
-
 
 module p_param_extractor(p_det, params);
     parameter int d = d;
@@ -17,172 +15,271 @@ module p_param_extractor(p_det, params);
     params_if.ext_p params;
 
     base_poly_t P;
-    mm_matrix_t L, L_inv;
+    mm_matrix_t L, Linv;
+    dm_matrix_t T11, T21;
+    state_t t;
     genvar i;
 
-    // For L, L_inv, P
+    // For L, Linv, P, T11, T21, t
     always_comb begin
         case (p_det)
             1: begin
                 L = `L1;
-                L_inv = `L_inv1;
+                Linv = `Linv1;
                 P = `P1;
+                T11 = `W11_1;
+                T21 = `W21_1;
+                t = `w1;
             end
             2: begin
                 L = `L2;
-                L_inv = `L_inv2;
+                Linv = `Linv2;
                 P = `P2;
+                T11 = `W11_2;
+                T21 = `W21_2;
+                t = `w2;
             end
             3: begin
                 L = `L3;
-                L_inv = `L_inv3;
+                Linv = `Linv3;
                 P = `P3;
+                T11 = `W11_3;
+                T21 = `W21_3;
+                t = `w3;
             end
             4: begin
                 L = `L4;
-                L_inv = `L_inv4;
+                Linv = `Linv4;
                 P = `P4;
+                T11 = `W11_4;
+                T21 = `W21_4;
+                t = `w4;
             end
             5: begin
                 L = `L5;
-                L_inv = `L_inv5;
+                Linv = `Linv5;
                 P = `P5;
+                T11 = `W11_5;
+                T21 = `W21_5;
+                t = `w5;
             end
             6: begin
                 L = `L6;
-                L_inv = `L_inv6;
+                Linv = `Linv6;
                 P = `P6;
+                T11 = `W11_6;
+                T21 = `W21_6;
+                t = `w6;
             end
             7: begin
                 L = `L7;
-                L_inv = `L_inv7;
+                Linv = `Linv7;
                 P = `P7;
+                T11 = `W11_7;
+                T21 = `W21_7;
+                t = `w7;
             end
             8: begin
                 L = `L8;
-                L_inv = `L_inv8;
+                Linv = `Linv8;
                 P = `P8;
+                T11 = `W11_8;
+                T21 = `W21_8;
+                t = `w8;
             end
             9: begin
                 L = `L9;
-                L_inv = `L_inv9;
+                Linv = `Linv9;
                 P = `P9;
+                T11 = `W11_9;
+                T21 = `W21_9;
+                t = `w9;
             end
             10: begin
                 L = `L10;
-                L_inv = `L_inv10;
+                Linv = `Linv10;
                 P = `P10;
+                T11 = `W11_10;
+                T21 = `W21_10;
+                t = `w10;
             end
             11: begin
                 L = `L11;
-                L_inv = `L_inv11;
+                Linv = `Linv11;
                 P = `P11;
+                T11 = `W11_11;
+                T21 = `W21_11;
+                t = `w11;
             end
             12: begin
                 L = `L12;
-                L_inv = `L_inv12;
+                Linv = `Linv12;
                 P = `P12;
+                T11 = `W11_12;
+                T21 = `W21_12;
+                t = `w12;
             end
             13: begin
                 L = `L13;
-                L_inv = `L_inv13;
+                Linv = `Linv13;
                 P = `P13;
+                T11 = `W11_13;
+                T21 = `W21_13;
+                t = `w13;
             end
             14: begin
                 L = `L14;
-                L_inv = `L_inv14;
+                Linv = `Linv14;
                 P = `P14;
+                T11 = `W11_14;
+                T21 = `W21_14;
+                t = `w14;
             end
             15: begin
                 L = `L15;
-                L_inv = `L_inv15;
+                Linv = `Linv15;
                 P = `P15;
+                T11 = `W11_15;
+                T21 = `W21_15;
+                t = `w15;
             end
             16: begin
                 L = `L16;
-                L_inv = `L_inv16;
+                Linv = `Linv16;
                 P = `P16;
+                T11 = `W11_16;
+                T21 = `W21_16;
+                t = `w16;
             end
             17: begin
                 L = `L17;
-                L_inv = `L_inv17;
+                Linv = `Linv17;
                 P = `P17;
+                T11 = `W11_17;
+                T21 = `W21_17;
+                t = `w17;
             end
             18: begin
                 L = `L18;
-                L_inv = `L_inv18;
+                Linv = `Linv18;
                 P = `P18;
+                T11 = `W11_18;
+                T21 = `W21_18;
+                t = `w18;
             end
             19: begin
                 L = `L19;
-                L_inv = `L_inv19;
+                Linv = `Linv19;
                 P = `P19;
+                T11 = `W11_19;
+                T21 = `W21_19;
+                t = `w19;
             end
             20: begin
                 L = `L20;
-                L_inv = `L_inv20;
+                Linv = `Linv20;
                 P = `P20;
+                T11 = `W11_20;
+                T21 = `W21_20;
+                t = `w20;
             end
             21: begin
                 L = `L21;
-                L_inv = `L_inv21;
+                Linv = `Linv21;
                 P = `P21;
+                T11 = `W11_21;
+                T21 = `W21_21;
+                t = `w21;
             end
             22: begin
                 L = `L22;
-                L_inv = `L_inv22;
+                Linv = `Linv22;
                 P = `P22;
+                T11 = `W11_22;
+                T21 = `W21_22;
+                t = `w22;
             end
             23: begin
                 L = `L23;
-                L_inv = `L_inv23;
+                Linv = `Linv23;
                 P = `P23;
+                T11 = `W11_23;
+                T21 = `W21_23;
+                t = `w23;
             end
             24: begin
                 L = `L24;
-                L_inv = `L_inv24;
+                Linv = `Linv24;
                 P = `P24;
+                T11 = `W11_24;
+                T21 = `W21_24;
+                t = `w24;
             end
             25: begin
                 L = `L25;
-                L_inv = `L_inv25;
+                Linv = `Linv25;
                 P = `P25;
+                T11 = `W11_25;
+                T21 = `W21_25;
+                t = `w25;
             end
             26: begin
                 L = `L26;
-                L_inv = `L_inv26;
+                Linv = `Linv26;
                 P = `P26;
+                T11 = `W11_26;
+                T21 = `W21_26;
+                t = `w26;
             end
             27: begin
                 L = `L27;
-                L_inv = `L_inv27;
+                Linv = `Linv27;
                 P = `P27;
+                T11 = `W11_27;
+                T21 = `W21_27;
+                t = `w27;
             end
             28: begin
                 L = `L28;
-                L_inv = `L_inv28;
+                Linv = `Linv28;
                 P = `P28;
+                T11 = `W11_28;
+                T21 = `W21_28;
+                t = `w28;
             end
             29: begin
                 L = `L29;
-                L_inv = `L_inv29;
+                Linv = `Linv29;
                 P = `P29;
+                T11 = `W11_29;
+                T21 = `W21_29;
+                t = `w29;
             end
             30: begin
                 L = `L30;
-                L_inv = `L_inv30;
+                Linv = `Linv30;
                 P = `P30;
+                T11 = `W11_30;
+                T21 = `W21_30;
+                t = `w30;
             end
             default: begin
                 L = 'x;
-                L_inv = 'x;
+                Linv = 'x;
                 P = 'x;
+                T11 = 'x;
+                T21 = 'x;
+                t = 'x;
             end
         endcase
     end
+
     assign params.P = P;
     assign params.L = L;
-    assign params.L_inv = L_inv;
+    assign params.Linv = Linv;
+    assign params.T11 = T11;
+    assign params.T21 = T21;
+    assign params.t = t;
 
     // For MC, simply shifted copies of P
     assign params.MC = '{default:0};
@@ -192,16 +289,45 @@ module p_param_extractor(p_det, params);
         end
     endgenerate
 
-    // For B, using degenerate instances of modular_shift,
-    // as rows are simply powers of x modulo P
-    assign params.B[0][0:7+d] = params.P;
+    // For B and its extensions, use degenerate instances of modular_shift
+    assign params.B_ext[0][0:7] = params.P[0:7];
     generate
-        for (i = 1; i < d; i++) begin
-            modular_shift #(.d(0)) modular_shift_inst(
-                .out(params.B[i]),
-                .in(params.B[i - 1]),
-                .poly(params.P[0:7])
-            );
+        for (i = 1; i < 6+2*d+1; i++) begin
+            assign params.B_ext[i][0:7] = {1'b0, params.B_ext[i-1][0:6]} ^ ({8{params.B_ext[i-1][7]}} & params.P[0:7]);
+        end
+    endgenerate
+    
+    for (i = 0; i < 7 + d; i ++) begin
+        assign params.B_ext_MC[i][0:7] = params.B_ext[i][0:7];
+    end
+    for (i = 0; i < d; i ++) begin
+        assign params.B[i][0:7] = params.B_ext[i][0:7];
+    end
+
+    // For T, generate the block matrix
+    genvar j;
+    generate
+        for (i = 0; i < 8+d; i++) begin
+            for (j = 0; j < 8+d; j++) begin
+                // Upper left block
+                if (i < 8 && j < 8) begin
+                    assign params.T[i][j] = params.T11[i][j];
+                end
+                else if (i >= 8 && j < 8) begin
+                    assign params.T[i][j] = params.T21[i-8][j];
+                end
+                else if (i < 8 && j >= 8) begin
+                    assign params.T[i][j] = 1'b0;
+                end
+                else begin
+                    if (i == j) begin
+                        assign params.T[i][j] = 1'b1;
+                    end
+                    else begin
+                        assign params.T[i][j] = 1'b0;
+                    end
+                end
+            end
         end
     endgenerate
 endmodule

@@ -5,11 +5,10 @@ import types::*;
 // Key expansion.
 // See the report for general architecture and state machine.
 
-module clm_aes_multiple_sbox_limited_p(inouts, p_det, Q, random_vect);
+module clm_aes_multiple_sbox_limited_p(inouts, p_det, random_vect);
     parameter int d = d;
     clm_inouts_if.basic inouts;
     input p_det_t p_det;
-    input red_poly_t Q;
 
     input red_poly_t [0:22] random_vect;
 
@@ -18,14 +17,14 @@ module clm_aes_multiple_sbox_limited_p(inouts, p_det, Q, random_vect);
     stages_t stage_ctr, stage_ctr_next;
 
     // Module outputs
-    state_vec_t random_input_out, transform_key_stretch, key_expansion_out,
+    state_vec_t random_input_out, transform_key_stretch,
                 add_round_key_out, sbox_out, shift_rows_out,
                 mix_columns_out, add_round_key_last_out;
 
     aes_state_t transform_input_out, transform_key_out, mod_p_out, inverse_transform_out;
 
-    ke_inouts_if ke_inouts;
-    sbox_inouts_if sbox_inouts[4][4];
+    ke_inouts_if ke_inouts();
+    sbox_inouts_if sbox_inouts[4][4]();
     logic [0:3][0:3] sbox_drdys;
     logic sbox_drdy;
 
@@ -35,7 +34,7 @@ module clm_aes_multiple_sbox_limited_p(inouts, p_det, Q, random_vect);
     aes_state_t state_vec_6;
     red_poly_t [0:22] r_saved;
     // Params calculated in first stage, stored in params_stored for later use
-    params_if #(d) params, params_saved;
+    params_if params(), params_saved();
 
 
     // Register enables
@@ -49,7 +48,7 @@ module clm_aes_multiple_sbox_limited_p(inouts, p_det, Q, random_vect);
     /* DATAPATH (NO REGISTERS) */
     //datapath: begin
         // Parameter Extraction
-        p_param_extractor p_extractor (.p_det(p_det), .params(params));
+        p_param_extractor p_extractor (.p_det(p_det), .params(params.ext_p));
 
         // Input & key transformation
         generate
@@ -86,7 +85,7 @@ module clm_aes_multiple_sbox_limited_p(inouts, p_det, Q, random_vect);
                     assign sbox_out[i][j] = sbox_inouts[i][j].out;
                     assign sbox_drdys[i][j] = sbox_inouts[i][j].drdy_o;
                     assign sbox_inouts[i][j].drdy_i = (stage_ctr == SUB_BYTES);
-                    clm_sbox sbox (.inouts(sbox_inouts[i][j]), .params(params));
+                    clm_sbox sbox (.inouts(sbox_inouts[i][j]), .params(params.in_use));
                 end
             end
         endgenerate
@@ -95,12 +94,11 @@ module clm_aes_multiple_sbox_limited_p(inouts, p_det, Q, random_vect);
         shift_rows shift_rows(.out(shift_rows_out), .in(state_vec_3));
 
         // Mix columns
-        mix_columns mix_columns(.out(mix_columns_out), .in(state_vec_4), .random_vect(random_vect[0:15]), .L(params_saved.L), .B_ext_MC(params_saved.B_ext_MC), .MC(params_saved.MC));
+        mix_columns mix_columns(.out(mix_columns_out), .in(state_vec_4), .random_vect(r_saved[0:15]), .L(params_saved.L), .B_ext_MC(params_saved.B_ext_MC), .MC(params_saved.MC));
 
         // Last round add round key
-        add_round_key #(.d(d)) add_round_key_last(.in(add_round_key_last_out),
-                                                  .out(state_vec_4),
-                                                .key(key_expansion_out));
+        add_round_key add_round_key_last(.out(add_round_key_last_out), .in(state_vec_4),
+                                         .key(ke_inouts.out));
 
         // Reduction modulo P
         generate
@@ -117,8 +115,8 @@ module clm_aes_multiple_sbox_limited_p(inouts, p_det, Q, random_vect);
                 for (j = 0; j < 4; j++) begin : gen_o_t_inner
                     input_transform output_transformer(.byte_o(inverse_transform_out[i][j]),
                                                        .byte_i(state_vec_6[i][j]),
-                                                       .L(params_saved.L_inv));
-
+                                                       .L(params_saved.Linv));
+                    
                 end
             end
         endgenerate
@@ -128,7 +126,7 @@ module clm_aes_multiple_sbox_limited_p(inouts, p_det, Q, random_vect);
         assign ke_inouts.r = r_saved[16:22];
         assign ke_inouts.clk = inouts.clk;
         assign ke_inouts.rst = inouts.rst;
-        key_expansion #(.d(d)) key_expansion(.inouts(ke_inouts), .params(params_saved));
+        key_expansion key_expansion(.inouts(ke_inouts.basic), .params(params_saved.in_use));
     //end
 
 
@@ -146,15 +144,36 @@ module clm_aes_multiple_sbox_limited_p(inouts, p_det, Q, random_vect);
                                     .in(shift_rows_out), .out(state_vec_4));
         register_state #(.d(d)) reg6(.clk(inouts.clk), .rst(inouts.rst), .en(reg6_en),
                                     .in(mux_out_3), .out(state_vec_5));
-        register_state #(.d(0)) reg7(.clk(inouts.clk), .rst(inouts.rst), .en(reg7_en),
+        register_aes_state reg7(.clk(inouts.clk), .rst(inouts.rst), .en(reg7_en),
                                     .in(mod_p_out), .out(state_vec_6));
 
         // Registers to save r
         always_ff @(posedge inouts.clk, posedge inouts.rst) begin
             if (inouts.rst) begin
                 r_saved <= '{default:0};
+                params_saved.P <= '0;
+                params_saved.L <= '0;
+                params_saved.Linv <= '0;
+                params_saved.B <= '0;
+                params_saved.B_ext <= '0;
+                params_saved.B_ext_MC <= '0;
+                params_saved.MC <= '0;
+                params_saved.T11 <= '0;
+                params_saved.T21 <= '0;
+                params_saved.T <= '0;
+                params_saved.t <= '0;
             end else if (stage_ctr == CALC_PARAMS) begin
-                params_saved <= params;
+                params_saved.P <= params.P;
+                params_saved.L <= params.L;
+                params_saved.Linv <= params.Linv;
+                params_saved.B <= params.B;
+                params_saved.B_ext <= params.B_ext;
+                params_saved.B_ext_MC <= params.B_ext_MC;
+                params_saved.MC <= params.MC;
+                params_saved.T11 <= params.T11;
+                params_saved.T21 <= params.T21;
+                params_saved.T <= params.T;
+                params_saved.t <= params.t;
             end else if (stage_ctr == PREP_DATA) begin
                 r_saved <= random_vect;
             end else if (stage_ctr == MIX_COLS) begin
@@ -186,7 +205,7 @@ module clm_aes_multiple_sbox_limited_p(inouts, p_det, Q, random_vect);
     // Muxes
     always_comb begin : muxes
         mux_out_1 = (round_ctr == `ROUND_BITS'd1) ? state_vec_1 : state_vec_5;
-        mux_out_2 = (stage_ctr == PREP_DATA) ? transform_key_stretch : key_expansion_out;
+        mux_out_2 = (stage_ctr == PREP_DATA) ? transform_key_stretch : ke_inouts.out;
         mux_out_3 = (round_ctr == `ROUND_BITS'd`ROUNDS) ? add_round_key_last_out : mix_columns_out;
     end
 
@@ -267,6 +286,21 @@ module register_state(clk, rst, en, in, out);
     input logic clk, rst, en;
     input state_vec_t in;
     output state_vec_t out;
+
+    always_ff @(posedge clk, posedge rst) begin
+        if (rst) begin
+            out <= '0;
+        end else if (en) begin
+            out <= in;
+        end
+    end
+endmodule
+
+// Simple register w/ async reset and enable for a state vector
+module register_aes_state(clk, rst, en, in, out);
+    input logic clk, rst, en;
+    input aes_state_t in;
+    output aes_state_t out;
 
     always_ff @(posedge clk, posedge rst) begin
         if (rst) begin

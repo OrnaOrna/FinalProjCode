@@ -33,7 +33,7 @@ module key_expansion(inouts, params);
     genvar i, j;
 
     // S-Box inouts
-    sbox_inouts_if sbox_inouts[4];
+    sbox_inouts_if sbox_inouts[4]();
 
 
     // Transpose inputs and outputs
@@ -67,7 +67,7 @@ module key_expansion(inouts, params);
             assign sbox_inouts[i].drdy_i = (stage_ctr == SUB_WORD);
             assign sub_word_out[i] = sbox_inouts[i].out;
 
-            clm_sbox sbox(.inouts(sbox_inouts[i]), .params(params));
+            clm_sbox sbox(.inouts(sbox_inouts[i].basic), .params(params));
         end
     endgenerate
 
@@ -94,11 +94,9 @@ module key_expansion(inouts, params);
     input_transform rc_transformer(.byte_o(rc_transformed), .byte_i(rc), .L(params.L));
 
     // Generate next rc_i
-    modular_shift #(.d(0)) rc_shifter (
-        .in(rc),
-        .out(rc_next),
-        .poly(params.P)
-    );
+    
+    assign rc_next = {1'b0, rc[0:6]} ^ ({8{rc[7]}} & params.P[0:7]);
+
 
     // Save output of XOR
     generate 

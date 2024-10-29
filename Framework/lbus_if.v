@@ -130,17 +130,30 @@ module LBUS_IF
          blk_kin <= 128'h0;
          blk_din <= 128'h0;
       end else if (trig_wr) begin
-        unique0 case (lbus_a)
+        case (lbus_a)
             16'h000C: blk_encdec <= lbus_di[0];
             16'h0100: blk_kin[127:112] <= lbus_di;
-            16'h0102: blk_kin[111: 96] <= lbus_di;
-            16'h0104: blk_kin[ 95: 80] <= lbus_di;
-            16'h0106: blk_kin[ 79: 64] <= lbus_di;
-            16'h0108: blk_kin[ 63: 48] <= lbus_di;
-            16'h010A: blk_kin[ 47: 32] <= lbus_di;
-            16'h010C: blk_kin[ 31: 16] <= lbus_di;
+            16'h0102: blk_kin[111: 96] <= lbus_di;  
+            16'h0104: blk_kin[ 95: 80] <= lbus_di;  
+            16'h0106: blk_kin[ 79: 64] <= lbus_di;  
+            16'h0108: blk_kin[ 63: 48] <= lbus_di;  
+            16'h010A: blk_kin[ 47: 32] <= lbus_di;  
+            16'h010C: blk_kin[ 31: 16] <= lbus_di;     
             16'h010E: blk_kin[ 15:  0] <= lbus_di;
-
+            
+            16'h0126: blk_din[495:480] <= lbus_di;
+            16'h0128: blk_din[479:464] <= lbus_di;
+            16'h012A: blk_din[463:448] <= lbus_di;
+            16'h012C: blk_din[447:432] <= lbus_di;
+            16'h012E: blk_din[431:416] <= lbus_di;
+            16'h0130: blk_din[415:400] <= lbus_di;
+            16'h0132: blk_din[399:384] <= lbus_di;
+            16'h0134: blk_din[383:368] <= lbus_di;
+            16'h0136: blk_din[367:352] <= lbus_di;
+            16'h0138: blk_din[351:336] <= lbus_di;
+            16'h013A: blk_din[335:320] <= lbus_di;
+            16'h013C: blk_din[319:304] <= lbus_di;
+            16'h013E: blk_din[303:288] <= lbus_di;
             16'h0140: blk_din[495:480] <= lbus_di;
             16'h0142: blk_din[479:464] <= lbus_di;
             16'h0144: blk_din[463:448] <= lbus_di;
@@ -204,5 +217,5 @@ module LBUS_IF
         default:  mux_lbus_do = 16'h0000;
       endcase
    endfunction
-
+   
 endmodule // LBUS_IF

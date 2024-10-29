@@ -14,7 +14,7 @@ module square(in, out, r, B_ext);
     // Result of rasining to the power of 2 without modular reduction 
     logic [0:2*(8+d-1)] pre_mod;
 
-    genvar i;
+    genvar i, j;
     generate
         for (i = 0; i < 8+d; i++) begin
             assign pre_mod[2*i] = in[i];
@@ -28,7 +28,11 @@ module square(in, out, r, B_ext);
     logic [0:7+d] reduction_term;
     generate
         for (i = 0; i < 8; i++) begin
-            assign reduction_term[i] = ^({r, pre_mod[8+d:2*(8+d-1)]} & B_ext[0:0+6+2*d][i]);
+            logic [0:6+2*d] column;
+            for (j = 0; j < 7+2*d; j++) begin
+                assign column[j] = B_ext[j][i];
+            end
+            assign reduction_term[i] = ^({r, pre_mod[8+d:2*(8+d-1)]} & column);
         end
     endgenerate
     assign reduction_term[8:7+d] = r;
