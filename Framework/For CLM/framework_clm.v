@@ -1,37 +1,7 @@
-/*-------------------------------------------------------------------------
- AES (128-bit, composite field S-box, encryption)
 
- File name   : aes_composite_enc.v
- Version     : 1.0
- Created     : JUN/12/2012
- Last update : JUN/22/2012
- Desgined by : Toshihiro Katashita
- 
-
- Copyright (C) 2012 AIST
- 
- By using this code, you agree to the following terms and conditions.
- 
- This code is copyrighted by AIST ("us").
- 
- Permission is hereby granted to copy, reproduce, redistribute or
- otherwise use this code as long as: there is no monetary profit gained
- specifically from the use or reproduction of this code, it is not sold,
- rented, traded or otherwise marketed, and this copyright notice is
- included prominently in any copy made.
- 
- We shall not be liable for any damages, including without limitation
- direct, indirect, incidental, special or consequential damages arising
- from the use of this code.
- 
- When you publish any results arising from the use of this code, we will
- appreciate it if you can cite our webpage.
- (http://www.risec.aist.go.jp/project/sasebo/)
- -------------------------------------------------------------------------*/
-//================================================ AES_Composite_enc
 import types::*;
 
-module AES_Composite_enc
+module framework
   (Kin, Din, Dout, Krdy, Drdy, Kvld, Dvld, EN, BSY, CLK, RSTn);
 
    //------------------------------------------------
@@ -155,4 +125,4 @@ module AES_Composite_enc
 //    rambam_sbox #(.d(`d), .P(`P), .Q(`Q)) sbox (.plaintext(xored[127:120-`d]), .out(dat_out[127:120-`d]), .r(r_compute[0:6]));
     //rambam_sbox_storage #(.d(`d), .P(`P), .Q(`Q)) sbox(.clk(CLK), .rst(rst), .plaintext(xored[127:120-`d]), .out(dat_out[127:120-`d]), .r(r_compute[0:6]));
     clm_aes_multiple_sbox_limited_p clm(.inouts(clm_inouts.basic), .random_vect(r_compute), .p_det(p_compute));
-endmodule // AES_Composite_enc
+endmodule

@@ -104,7 +104,7 @@ module CHIP_SASEBO_GIII_AES
 
    always @(posedge clk) blk_drdy_delay <= blk_drdy;
 
-   AES_Composite_enc AES_Composite_enc
+   framework framework_inst
      (.Kin(blk_kin), .Din(blk_din), .Dout(blk_dout),
       .Krdy(blk_krdy), .Drdy(blk_drdy_delay), .Kvld(blk_kvld), .Dvld(blk_dvld),
       /*.EncDec(blk_encdec),*/ .EN(blk_en), .BSY(blk_busy),
