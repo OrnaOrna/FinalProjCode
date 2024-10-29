@@ -1,12 +1,11 @@
-// CLM module with 16 S-Boxes running in parallel, and additional 4 S-Boxes used for 
-// Key expansion. DEFINITELY NOT FINAL, does not include as of yet
-// parameter extraction for all parameters and correct randomization inputs.
-// See the report for general architecture and state machine.
 `include "clm_typedefs.svh"
 import types::*;
 
+// CLM module with 16 S-Boxes running in parallel, and additional 4 S-Boxes used for 
+// Key expansion.
+// See the report for general architecture and state machine.
 
-module clm_aes_multiple_sbox_both_random(inouts, p_det, Q, random_vect);
+module clm_aes_multiple_sbox_limited_p(inouts, p_det, Q, random_vect);
     parameter int d = d;
     clm_inouts_if.basic inouts;
     input p_det_t p_det;
@@ -34,7 +33,7 @@ module clm_aes_multiple_sbox_both_random(inouts, p_det, Q, random_vect);
     state_vec_t state_vec_1, state_vec_2, state_vec_3, state_vec_4,
                             state_vec_5, key_vec, mux_out_1, mux_out_2, mux_out_3;
     aes_state_t state_vec_6;
-    red_poly_t [0:6] r_saved;
+    red_poly_t [0:22] r_saved;
     // Params calculated in first stage, stored in params_stored for later use
     params_if #(d) params, params_saved;
 
@@ -81,7 +80,7 @@ module clm_aes_multiple_sbox_both_random(inouts, p_det, Q, random_vect);
             for (i = 0; i < 4; i++) begin : gen_s_outer
                 for (j = 0; j < 4; j++) begin : gen_s_inner
                     assign sbox_inouts[i][j].in = state_vec_2[i][j];
-                    assign sbox_inouts[i][j].r = shift_randomness(r_saved, 4*i+j);
+                    assign sbox_inouts[i][j].r = shift_randomness(r_saved[16:22], 4*i+j);
                     assign sbox_inouts[i][j].clk = inouts.clk;
                     assign sbox_inouts[i][j].rst = inouts.rst;
                     assign sbox_out[i][j] = sbox_inouts[i][j].out;
@@ -96,7 +95,7 @@ module clm_aes_multiple_sbox_both_random(inouts, p_det, Q, random_vect);
         shift_rows shift_rows(.out(shift_rows_out), .in(state_vec_3));
 
         // Mix columns
-        mix_columns mix_columns(.out(mix_columns_out), .in(state_vec_4), .L2(params_saved.L2));
+        mix_columns mix_columns(.out(mix_columns_out), .in(state_vec_4), .random_vect(random_vect[0:15]), .L(params_saved.L), .B_ext_MC(params_saved.B_ext_MC), .MC(params_saved.MC));
 
         // Last round add round key
         add_round_key #(.d(d)) add_round_key_last(.in(add_round_key_last_out),
@@ -126,7 +125,7 @@ module clm_aes_multiple_sbox_both_random(inouts, p_det, Q, random_vect);
 
         // Key expansion
         assign ke_inouts.in = key_vec;
-        assign ke_inouts.r = r_saved;
+        assign ke_inouts.r = r_saved[16:22];
         assign ke_inouts.clk = inouts.clk;
         assign ke_inouts.rst = inouts.rst;
         key_expansion #(.d(d)) key_expansion(.inouts(ke_inouts), .params(params_saved));
@@ -157,9 +156,9 @@ module clm_aes_multiple_sbox_both_random(inouts, p_det, Q, random_vect);
             end else if (stage_ctr == CALC_PARAMS) begin
                 params_saved <= params;
             end else if (stage_ctr == PREP_DATA) begin
-                r_saved <= random_vect[16:22];
+                r_saved <= random_vect;
             end else if (stage_ctr == MIX_COLS) begin
-                r_saved <= shift_randomness(r_saved, 16);
+                r_saved[16:22] <= shift_randomness(r_saved[16:22], 16);
             end
         end
     //end
@@ -261,6 +260,7 @@ module clm_aes_multiple_sbox_both_random(inouts, p_det, Q, random_vect);
     endfunction
 endmodule
 
+// Simple register w/ async reset and enable for a state vector
 module register_state(clk, rst, en, in, out);
     parameter int d = 4;
 

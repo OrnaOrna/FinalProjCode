@@ -8,7 +8,7 @@ module multiplier(out, p1, p2);
     input logic [0:7+d] p1;
     input logic [0:7+d] p2;
 
-    // see design document for details
+    // see report for details
     logic [0:7+d] cout[0:8+d];
     logic [0:7+d] deg[0:7+d];
     genvar i;
