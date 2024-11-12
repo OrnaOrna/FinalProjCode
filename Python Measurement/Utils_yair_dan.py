@@ -100,7 +100,7 @@ def change_rand(i):
     EXP_MODE_RAND = i
 
 
-def perform_measurement(start, number_of_files, num_of_queries, exp_mode, pixel_path, chip_serial,
+def perform_measurement(start, number_of_files, num_of_queries, pixel_path, chip_serial,
                         serial_picoscope: ps5000a.PS5000a = None):
     # const_key = np.random.randint(0, 2**16, size=(1, 8), dtype=np.uint16)
     const_key = np.zeros(shape=(1, 8), dtype=np.uint16)
@@ -185,8 +185,6 @@ def perform_measurement(start, number_of_files, num_of_queries, exp_mode, pixel_
                 "EXP_MODE": EXP_MODE,
                 "FREQ_ENUM": FREQ_ENUM_ARRAY,
             }
-            if MEAS_EM:
-                traces_batch["traces"] = traces
             if MEAS_POWER:
                 traces_batch["power_traces"] = power_traces
             if T_TEST:
@@ -199,7 +197,7 @@ def perform_measurement(start, number_of_files, num_of_queries, exp_mode, pixel_
             )
 
 
-def close(chip_serial, motor_x=None, motor_y=None, motor_z=None, riscure_serial=None):
+def close(chip_serial):
     """Closes serial ports """
     chip_serial.close()
     print("[+]Chip serial PORT Disengaged.")

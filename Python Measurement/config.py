@@ -1,5 +1,4 @@
 """Module provides configuration constants for the project"""
-import ChipGridCalculations as CGC
 from numpy import array, uint8
 
 """Constants"""
@@ -9,105 +8,35 @@ CONNECTION_KO = (
 )
 
 """Paths"""
-SAVE_PATH = False  # save path,False = public documents, True = WD hard drive
 ADJUSTED_PATH = True
 PATH = "C:\\Users\\Public\\Documents\\measurements"
-HARD_DRIVE_PATH = "C:\\Users\\Public\\Documents\\dan_yair_meas_config"  # D:\\Traces_nimrod_danieLPLS15\\ "F:\\nimrod daniel measurements\\"
-GRID_NPZ_PATH = "grids/AES_ACCELERATOR_PLS15.npz"  # "grids\\PLS15_single_point.npz" "pls15_basic.npz"
-
-"""Connections EM"""
-MOTOR_COM_PORT = "COM8"
-MOTOR_BAUDRATE = 9600
-
-"""Connections EM"""
-CHIP_COM_PORT = "COM5"  # 'COM4' or 'COM5' or 'COM12' depends on Board for PLS , 'COM11' for Arduino
-CHIP_BAUDRATE = 9600
-
-"""Defining riscure probe station """
-CHIP_SELECT = 1  # 0 for package , 1 for chip, dont change!!!
-PROBE_SELECT = 0  # 0 is Green, 1 is Yellow, else is Black or ICR probe
-PACKAGE_SIZE = 7  # in mm^2
-CHIP_SIZE = 3.5  # in mm^2
-GRID_SIZE = 10
-Y_MIN_PACKAGE = -1132788  # towards chair #1342015 ICR
-Y_MAX_PACKAGE = -28789  # towards wall #2737452 ICR
-Y_UNIT_SIZE = CGC.convert_to_motor_units(
-    Y_MAX_PACKAGE, Y_MIN_PACKAGE, PACKAGE_SIZE
-)  # motor units per per millimeter
-X_MIN_PACKAGE = -2393556  # right corner #4423219 prev icr coor
-X_MAX_PACKAGE = -1064868  # left corner #5787790 ICR
-X_unit_size = CGC.convert_to_motor_units(
-    X_MAX_PACKAGE, X_MIN_PACKAGE, PACKAGE_SIZE
-)  # motor units per millimeter
-DISTANCE_TO_CORNER_PIXEL = CGC.center_of_corner_pixel(
-    PACKAGE_SIZE, CHIP_SIZE, GRID_SIZE
-)  # in millimeter
-
-if CHIP_SELECT == 0:  # 0 is Left chip, 1 is Right chip
-    # package coordinates
-    Y_MIN = Y_MIN_PACKAGE  # towards chair
-    Y_MAX = Y_MAX_PACKAGE  # towards wall
-    X_MIN = X_MIN_PACKAGE  # right corner
-    X_MAX = X_MAX_PACKAGE  # left corner
-elif CHIP_SELECT == 1:  # chip coordinates according to grid
-    Y_MIN = CGC.corner_pixel_min(Y_MIN_PACKAGE, Y_UNIT_SIZE, DISTANCE_TO_CORNER_PIXEL)
-    Y_MAX = CGC.corner_pixel_max(Y_MAX_PACKAGE, Y_UNIT_SIZE, DISTANCE_TO_CORNER_PIXEL)
-    X_MIN = CGC.corner_pixel_min(X_MIN_PACKAGE, X_unit_size, DISTANCE_TO_CORNER_PIXEL)
-    X_MAX = CGC.corner_pixel_max(X_MAX_PACKAGE, X_unit_size, DISTANCE_TO_CORNER_PIXEL)
-elif CHIP_SELECT == 2:  # PLS15 evk 2, used with ICR probe
-    Y_MIN = -4891952  # towards chair
-    Y_MAX = -4277316  # towards wall
-    X_MIN = 5498500  # right corner
-    X_MAX = 6048143  # left corner
-
-if PROBE_SELECT == 0:  # 0 is Green, 1 is Yellow, else is ICR
-    Z_MIN = 10753
-    Z_MAX = 10723910  # up
-
-# elif PROBE_SELECT == 1:
-#     Z_MIN = 304080
-#     Z_MAX = 408557900  # upx
-# elif PROBE_SELECT == 2:  # ICR probe
-#     Z_MIN = -921181
-#     Z_MAX = 4085579  # up
-
-"""trace taking speed should be 2047, hand speed change while setting grid coordinates"""
-X_MOVEMENT_SPEED = 2047  # 2047
-Y_MOVEMENT_SPEED = 2047  # 2047
-Z_MOVEMENT_SPEED = 5000  # 2047
+HARD_DRIVE_PATH = "C:\\Users\\Public\\Documents\\dan_yair_meas_config"
 
 """"experiment setup"""
 d = 8
 P = 299
 BYTE = 7
-EXP_MODE = 0b000
 T_TEST = True
 SAMPLES = 1000
 
-OFFSET = 0  # 700 ### Looks like Dual-rail blocks opcodes 18/19 (24/25) are operating without offset
-NUM_OF_QUERIES = 50  # 9000  # 50000
+OFFSET = 0  
+NUM_OF_QUERIES = 50 
 NUMBER_OF_FILES = 1
 START = 0  # file from which measurement will continue
 # saving methods: NPY (Python compatible), MAT (Matlab compatible),None for not saving the workspace
 SAVE_METHOD = "MAT"
 PS_MODEL = 5000
 
-"""EM stuff"""
-RISCURE_ARMED = False  # always false on this PC
-MEAS_EM = False  # always false
-RESUME_RUN = False  # used to resume previous run from last unfinished pixel
 
-PICO_ARMED = True  # armed: if true will measure, otherwise will skip
 PICO_ARMED = True  # armed: if true will measure, otherwise will skip
 ARMED = True  # armed: if true will measure, otherwise will skip
 WITH_UART = True
 MEAS_POWER = True
-EXPERIMENT_DESC = f"_p_state_accel_50R_f=1"
 
 EXP_MODE_KEY = 0
 EXP_MODE_PT = 0
 EXP_MODE_RAND = 0
-EXP_MODE_DEVICE = "trying some bullshit"
+EXP_MODE_DEVICE = "RAMBAM"
 
 """chooses frequencies according to enumerate value in the following chart
 . min value is 3 (21.33Mhz) max value is 21 (533Khz). referenced from pls15 sdk 1.1. clock.h
@@ -193,13 +122,6 @@ SAMPLING_INTERVAL = 8E-9
 %                20.0 = +/-20V ;  }
 % ChXOffset -> [V]
 """
-
-# Channel A configuration
-EM_CHANNEL = "C"
-EM_CH_ENABLED = False
-EM_CH_COUPLING = 1  # 0 = AC ; 1 = DC  ;2 = DC 50ohm
-EM_CH_RANGE = 0.5  # WDDL+MSK (d=2) 0.02
-EM_CH_OFFSET = 0  # WDDL+MSK (d=2) 5 (mV)
 
 # Channel B configuration
 POWER_CHANNEL = "B"
