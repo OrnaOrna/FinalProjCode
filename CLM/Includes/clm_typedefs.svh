@@ -52,7 +52,7 @@ endinterface
 interface ke_inouts_if;
     parameter int d = d;
 
-    state_word_t in, out;
+    state_vec_t in, out;
     red_poly_t [0:6] r;
     logic clk, rst;
     logic drdy_i, drdy_o, first_round;

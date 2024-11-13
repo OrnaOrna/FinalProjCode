@@ -42,6 +42,7 @@ module mul_L2(out, in, r, L, B_ext_MC);
                 assign overflow_sum[i] = ^(column);
             end
         endgenerate
+        
     
         // Use B_ext_MC as a systematic encoder to get the modular reduction term (again, may need to transpose)
         // concatenation from the LEFT means lower bits, this is where we should add the refresh
@@ -50,7 +51,7 @@ module mul_L2(out, in, r, L, B_ext_MC);
             for (i = 0; i < 8; i++) begin
                 logic [0:6+d] column;
                 for (j = 0; j < 7+d; j++) begin
-                    assign column[i] = B_ext_MC[j][i];
+                    assign column[j] = B_ext_MC[j][i];
                 end
                 assign reduction_term[i] = ^({r, overflow_sum} & column);
             end

@@ -55,7 +55,7 @@ module serial_mult_tb;
 
         // Wait for multiplication to complete
         wait (drdy_o == '1);
-
+        #5;
         // Check result
         $display("Result: %h", out);
 

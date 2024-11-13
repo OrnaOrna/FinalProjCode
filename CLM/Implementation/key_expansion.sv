@@ -83,7 +83,7 @@ module key_expansion(inouts, params);
     // XOR stage
     always_comb begin : xor_stage
         rcon[0] = {rc_transformed, {d{1'b0}}};
-        rcon[3:1] = '{default:0};
+        rcon[1:3] = '{default:0};
         out_transposed[0] = in_transposed[0] ^ word_saved ^ rcon;
         out_transposed[1] = in_transposed[1] ^ out_transposed[0];
         out_transposed[2] = in_transposed[2] ^ out_transposed[1];

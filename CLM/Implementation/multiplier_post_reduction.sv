@@ -34,7 +34,7 @@ module multiplier(out, p1, p2, r, B_ext);
     generate
         for (i = 0; i < 7+d; i++) begin
             logic[0:7+d] column;
-            for (j = 0; j < 7+d; j++) begin
+            for (j = 0; j < 8+d; j++) begin
                 assign column[j] = partial_products[j][8+d+i];
             end
             assign overflow_sum[i] = ^(column);
@@ -45,7 +45,6 @@ module multiplier(out, p1, p2, r, B_ext);
     // concatenation from the LEFT means lower bits, this is where we should add the refresh
     logic [0:7+d] reduction_term;
     generate
-
         for (i = 0; i < 8; i++) begin
             logic [0:6+2*d] column;
             for (j = 0; j < 7+2*d; j++) begin
@@ -60,7 +59,7 @@ module multiplier(out, p1, p2, r, B_ext);
     generate
         for (i = 0; i < 8+d; i++) begin
             logic [0:7+d] column;
-            for (j = 0; j < 7+d; j++) begin
+            for (j = 0; j < 8+d; j++) begin
                 assign column[j] = partial_products[j][i];
             end
             assign out[i] = reduction_term[i] ^ (^column);

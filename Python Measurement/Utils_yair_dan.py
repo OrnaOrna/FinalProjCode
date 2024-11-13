@@ -1,9 +1,7 @@
 import os
-import time
-
-import numpy as np
 import secrets
 
+import numpy as np
 from picoscope import (ps5000a)
 from scipy.io import savemat
 from tqdm import trange

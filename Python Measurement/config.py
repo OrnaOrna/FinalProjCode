@@ -28,7 +28,7 @@ SAVE_METHOD = "MAT"
 PS_MODEL = 5000
 
 
-PICO_ARMED = True  # armed: if true will measure, otherwise will skip
+PICO_ARMED = False  # armed: if true will measure, otherwise will skip
 ARMED = True  # armed: if true will measure, otherwise will skip
 WITH_UART = True
 MEAS_POWER = True

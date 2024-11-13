@@ -32,7 +32,7 @@ module mix_column_single(out, in, random_vect, L, B_ext_MC, MC);
         for (i = 0; i < 4; i++) begin : gen_mix_o
             for (j = 0; j < 4; j++) begin : gen_mix_i
                 if (mds_matrix[i][j] == 1) begin
-                    mul_add_p(.out(partial_products[i][j]),
+                    mul_add_p add_P_inst(.out(partial_products[i][j]),
                             .in(in[j]), .r(random_vect[4*i+j]),
                             .M(MC));
                 end else if (mds_matrix[i][j] == 2) begin

@@ -85,7 +85,7 @@ module clm_aes_multiple_sbox_limited_p(inouts, p_det, random_vect);
                     assign sbox_out[i][j] = sbox_inouts[i][j].out;
                     assign sbox_drdys[i][j] = sbox_inouts[i][j].drdy_o;
                     assign sbox_inouts[i][j].drdy_i = (stage_ctr == SUB_BYTES);
-                    clm_sbox sbox (.inouts(sbox_inouts[i][j]), .params(params.in_use));
+                    clm_sbox sbox (.inouts(sbox_inouts[i][j].basic), .params(params.in_use));
                 end
             end
         endgenerate
