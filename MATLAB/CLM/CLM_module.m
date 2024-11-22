@@ -17,11 +17,11 @@ end
 % 10 Rounds
 for n=1:10
     x_after = addRoundKey_module(x_after, k_after, d);
-    k_after = keyExpansion_module(k_after,r(17:23,:),P,Q,n,d);
+    k_after = keyExpansion_CLM(k_after,r(17:23,:),P,n,d);
     x_after = shiftRows_module(x_after);
     x_after = SBOX16_CLM(x_after, r(17:23,:), P);
     if n ~= 10
-        x_after = mixColumns_module(x_after, P, Q, d);
+        x_after = mixColumns_CLM(x_after, r, P, d);
     end
 end
 x_after = addRoundKey_module(x_after, k_after, d);

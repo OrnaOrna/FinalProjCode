@@ -1,20 +1,16 @@
 addpath(folder_path());
-P = 283;
-m = 8;  % 128-bit AES
-d = 4;  
-r = randi([0 1], 7, d);
-B = generator_matrix(P, d);
-H = [eye(m) B'];
+% Choose CLM parameters 
+P = hex2dec('169');
+d = 4;
+% Choose plaintext and key (hexadecimal) 
+key_str = strsplit('00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 01', ' ');
+pt_str = strsplit('00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 01', ' ');
 
-in = randi([0, (2^m-1)]);
-dec2hex(in)
+key_arr = zeros(16,8);
+pt_arr = zeros(16,8);
+for i=1:16
+    key_arr(i,:) = flip(pad(dec2bin(hex2dec(key_str(i))), 8, 'left', '0')=='1');
+    pt_arr(i,:) = flip(pad(dec2bin(hex2dec(pt_str(i))), 8, 'left', '0')=='1');
+end
 
-bit8_input = flip(dec2bin(in)=='1');
-bit8_input = [bit8_input zeros(1, m - length(bit8_input))];
-L = isomorphism(P);
-L_inv = inverse_over_F2(L);
-
-
-x_in = mulAdd_module(mod(bit8_input*L,2), randi([0 1], 1, d),P,d);
-x_out = CLM_Sbox(x_in,r,P);
-flip(mod(x_out*H'*L_inv,2))
+CLM_module(pt_arr, key_arr, randi([0 1], 23, d), P, d)
