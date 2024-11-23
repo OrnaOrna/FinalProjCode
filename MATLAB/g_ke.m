@@ -3,9 +3,9 @@ function out = g_ke(w,r,P,Q,rnd)
 temp = w(1,:);
 % Byte shifting 
 for i=1:3
-    w(i,:) = SBOX_module(w(i+1,:),r,P,Q,'sbox_stuff.txt');
+    w(i,:) = SBOX_module(w(i+1,:),r,P,Q,'');
 end
-w(4,:) = SBOX_module(temp,r,P,Q,'sbox_stuff.txt');
+w(4,:) = SBOX_module(temp,r,P,Q,'');
  
 % Xoring with RCON 
 L = isomorphism(P);

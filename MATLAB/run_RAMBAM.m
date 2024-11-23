@@ -13,4 +13,5 @@ for i=1:16
     pt_arr(i,:) = flip(pad(dec2bin(hex2dec(pt_str(i))), 8, 'left', '0')=='1');
 end
 
+warning('off', 'all');
 RAMBAM_module(pt_arr, key_arr, randi([0 1], 23, d), P, Q, d)
