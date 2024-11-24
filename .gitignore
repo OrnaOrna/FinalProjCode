@@ -2,3 +2,6 @@
 /Python Measurement/__pycache__/
 .DS_Store
 /.settings/
+*.asv
+*.xml
+**/.project

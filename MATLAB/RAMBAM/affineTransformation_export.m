@@ -16,7 +16,7 @@ L_inv = inverse_over_F2(L);
 B = generator_matrix(P,d);
 
 W11 = mod(L_inv*T*L,2);
-W22 = ones(d);
+W22 = eye(d);
 W21 = mod(-B*W11-W22*B, 2);
 
 H = [eye(m) B'];

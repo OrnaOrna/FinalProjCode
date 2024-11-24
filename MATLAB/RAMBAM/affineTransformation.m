@@ -21,7 +21,7 @@ B = generator_matrix(P,d);
 % Construction of the matrix
 W11 = mod(L_inv*T*L,2);
 W12 = zeros(m, d);
-W22 = ones(d);
+W22 = eye(d);
 W21 = mod(-B*W11-W22*B, 2);
 W = [W11 W12; W21 W22];
 

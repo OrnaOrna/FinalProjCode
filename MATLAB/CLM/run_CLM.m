@@ -5,7 +5,7 @@ P = hex2dec('169');
 d = 8;
 % Choose plaintext and key (hexadecimal) 
 key_str = strsplit('00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00', ' ');
-pt_str = strsplit('00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00', ' ');
+pt_str = strsplit('00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ff', ' ');
 
 key_arr = zeros(16,8);
 pt_arr = zeros(16,8);
