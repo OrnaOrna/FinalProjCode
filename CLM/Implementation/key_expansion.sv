@@ -93,9 +93,10 @@ module key_expansion(inouts, params);
     // transform rc_i
     input_transform rc_transformer(.byte_o(rc_transformed), .byte_i(rc), .L(params.L));
 
+    // AES generator polynomial
+    localparam bit[0:8] P0 = 9'b110110001; 
     // Generate next rc_i
-    
-    assign rc_next = {1'b0, rc[0:6]} ^ ({8{rc[7]}} & params.P[0:7]);
+    assign rc_next = {1'b0, rc[0:6]} ^ ({8{rc[7]}} & P0[0:7]);
 
 
     // Save output of XOR

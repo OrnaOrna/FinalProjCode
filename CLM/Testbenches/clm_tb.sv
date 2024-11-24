@@ -42,7 +42,7 @@ module clm_tb();
         clm_inouts.plaintext = 128'h0;
         clm_inouts.key = 128'h0;
         random_vect = '{default:7'd0};
-        p_det = 5'b1;
+        p_det = 5'd11;
         
         #10;
 
