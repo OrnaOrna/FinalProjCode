@@ -30,6 +30,9 @@ x_after = addRoundKey_module(x_after, k_after, d);
 x_out = zeros(16,8);
 for i=1:16
     x_out(i,:) = modP_module(x_after(i,:), P, d);
+end
+
+for i=1:16
     x_out(i,:) = mod(x_out(i,:)*L_inv,2);
 end
 end
