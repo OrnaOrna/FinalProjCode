@@ -42,7 +42,7 @@ module clm_sbox(inouts, params);
     multiplier mult3t12(.out(t15), .p1(t3_saved), .p2(t12_saved), .r(inouts.r[3]), .B_ext(params.B_ext));
     register_d pipe_stage4(.clk(inouts.clk), .rst(inouts.rst), .en(reg4_en), .in(t15), .out(t15_saved));
 
-    power #(.pow(3)) pow16(.out(t240), .in(t15_saved), .r(inouts.r[4]), .B_ext(params.B_ext));
+    power #(.pow(4)) pow16(.out(t240), .in(t15_saved), .r(inouts.r[4]), .B_ext(params.B_ext));
     register_d pipe_stage5(.clk(inouts.clk), .rst(inouts.rst), .en(reg5_en), .in(t240), .out(t240_saved));
 
     multiplier mult4t240(.out(t254), .p1(t14_saved), .p2(t240_saved), .r(inouts.r[4]), .B_ext(params.B_ext));
