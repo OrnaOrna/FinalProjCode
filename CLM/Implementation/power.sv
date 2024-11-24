@@ -24,10 +24,11 @@ module power(in, out, r, B_ext);
             square squarer1(.in(in), .out(squarer1_out), .r(r), .B_ext(B_ext));
             square squarer2(.in(squarer1_out), .out(out), .r(r), .B_ext(B_ext));
         end else if (pow == 4) begin
-            state_t squarer1_out, squarer2_out;
+            state_t squarer1_out, squarer2_out, squarer3_out;
             square squarer1(.in(in), .out(squarer1_out), .r(r), .B_ext(B_ext));
             square squarer2(.in(squarer1_out), .out(squarer2_out), .r(r), .B_ext(B_ext));
-            square squarer3(.in(squarer2_out), .out(out), .r(r), .B_ext(B_ext));
+            square squarer3(.in(squarer2_out), .out(squarer3_out), .r(r), .B_ext(B_ext));
+            square squarer4(.in(squarer3_out), .out(out), .r(r), .B_ext(B_ext));
         end else begin
             assign out = in;
         end

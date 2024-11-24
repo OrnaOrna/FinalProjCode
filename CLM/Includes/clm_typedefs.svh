@@ -21,7 +21,7 @@ package types;
     typedef logic[0:7][0:7+d] mr_matrix_t;
     typedef logic[0:7+d][0:7] rm_matrix_t;
     typedef logic[0:7+d][0:7+d] rr_matrix_t;
-    typedef logic[0:2*(8+d-1)-8][0:7] nm_matrix_t;
+    typedef logic[0:6+2*d][0:7] nm_matrix_t;
     typedef logic[0:6+d][0:7] bm_matrix_t;
 
 

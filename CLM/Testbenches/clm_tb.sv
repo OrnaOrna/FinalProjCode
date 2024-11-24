@@ -39,9 +39,9 @@ module clm_tb();
         
         #10;
         clm_inouts.drdy_i = 1'b1;
-        clm_inouts.plaintext = 128'h0;
-        clm_inouts.key = 128'h0;
-        random_vect = '{default:7'd0};
+        clm_inouts.plaintext = 128'hff;
+        clm_inouts.key = 128'h00;
+        random_vect = '{default:8'd109};
         p_det = 5'd11;
         
         #10;

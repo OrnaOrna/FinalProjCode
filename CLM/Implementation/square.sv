@@ -12,7 +12,7 @@ module square(in, out, r, B_ext);
     input nm_matrix_t B_ext;
 
     // Result of rasining to the power of 2 without modular reduction 
-    logic [0:2*(8+d-1)] pre_mod;
+    logic [0:14+2*d] pre_mod;
 
     genvar i, j;
     generate
@@ -32,7 +32,7 @@ module square(in, out, r, B_ext);
             for (j = 0; j < 7+2*d; j++) begin
                 assign column[j] = B_ext[j][i];
             end
-            assign reduction_term[i] = ^({r, pre_mod[8+d:2*(8+d-1)]} & column);
+            assign reduction_term[i] = ^({r, pre_mod[8+d:14+2*d]} & column);
         end
     endgenerate
     assign reduction_term[8:7+d] = r;
