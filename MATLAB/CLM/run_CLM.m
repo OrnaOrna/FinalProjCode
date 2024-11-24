@@ -1,7 +1,8 @@
-% Choose RAMBAM parameters 
-Q = hex2dec('17b');
+addpath(folder_path());
+warning('off', 'all')
+% Choose CLM parameters 
 P = hex2dec('169');
-d = floor(log2(Q));
+d = 8;
 % Choose plaintext and key (hexadecimal) 
 key_str = strsplit('00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00', ' ');
 pt_str = strsplit('00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00', ' ');
@@ -13,4 +14,4 @@ for i=1:16
     pt_arr(i,:) = flip(pad(dec2bin(hex2dec(pt_str(i))), 8, 'left', '0')=='1');
 end
 
-RAMBAM_module(pt_arr, key_arr, randi([0 1], 23, d), P, Q, d)
+CLM_module(pt_arr, key_arr, randi([0 0], 23, d), P, d)
