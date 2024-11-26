@@ -1,7 +1,7 @@
 /Python Measurement/.idea/
 /Python Measurement/__pycache__/
 .DS_Store
-/.settings/
+**/.settings/
 **.asv
 *.xml
 **/.project
