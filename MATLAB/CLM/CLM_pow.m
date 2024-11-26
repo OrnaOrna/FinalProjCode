@@ -3,8 +3,7 @@ function out = CLM_pow(t,m,q,P)
 out = t;
 for i=1:m
     sqr = flip(out);
-    sqr = mod(conv(sqr,sqr),2);
-    sqr = flip(sqr);
+    sqr = flip(mod(conv(sqr,sqr),2));
     % Perform CLM modulo PQ reduction
     out = CLM_modPQ_reduc(sqr,q,P);
 end
