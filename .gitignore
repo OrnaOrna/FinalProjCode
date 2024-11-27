@@ -5,5 +5,5 @@
 **.asv
 *.xml
 **/.project
-**/.swp
-**/.swo
+**.swp
+**.swo
