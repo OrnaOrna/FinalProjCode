@@ -8,7 +8,7 @@ module affine_transform(in, out, T, t);
 
     output state_t out;
     input state_t in, t;
-    input rr_matrix_t T;    
+    input nn_matrix_t T;    
 
     state_t lin_trans;
     matrix_mul linear_transformer (.in(in), .out(lin_trans), .matrix(T));

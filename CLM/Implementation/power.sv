@@ -12,7 +12,7 @@ module power(in, out, r, B_ext);
     input state_t in;
     input red_poly_t r;
     output state_t out;
-    input nm_matrix_t B_ext;
+    input mul_m_matrix_t B_ext;
 
 
     generate

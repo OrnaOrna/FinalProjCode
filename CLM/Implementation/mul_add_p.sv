@@ -11,7 +11,7 @@ module mul_add_p(out, in, r, M);
     output state_t out;
     input state_t in;
     input red_poly_t r;
-    input mr_matrix_t M;
+    input dn_matrix_t M;
 
 
     state_t rP;

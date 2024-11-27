@@ -12,8 +12,8 @@ module mix_columns(out, in, random_vect, L, B_ext_MC, MC);
     input red_poly_t[0:15] random_vect;
     output state_vec_t out;
     input mm_matrix_t L;
-    input bm_matrix_t B_ext_MC;
-    input mr_matrix_t MC;
+    input mc_m_matrix_t B_ext_MC;
+    input mn_matrix_t MC;
 
 
     // See matrix_mul.sv for an explanation of the transposition trick.

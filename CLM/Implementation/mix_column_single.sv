@@ -12,8 +12,8 @@ module mix_column_single(out, in, random_vect, L, B_ext_MC, MC);
     input state_word_t in;
     input red_poly_t[0:15] random_vect;
     input mm_matrix_t L;
-    input bm_matrix_t B_ext_MC;
-    input mr_matrix_t MC;
+    input mc_m_matrix_t B_ext_MC;
+    input mn_matrix_t MC;
 
 
     // The mixcoluns matrix as defined in AES (for comparison and extraction)

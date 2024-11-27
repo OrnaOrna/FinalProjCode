@@ -11,7 +11,7 @@ module mul_L2(out, in, r, L, B_ext_MC);
     input state_t in;
     input red_poly_t r;
     input mm_matrix_t L;
-    input bm_matrix_t B_ext_MC;
+    input mc_m_matrix_t B_ext_MC;
 
 
         // partial products are extended to length 2m+d-1, to reach the highest degree available by multiplication

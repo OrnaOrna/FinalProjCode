@@ -18,11 +18,13 @@ package types;
     typedef logic[0:d-1][0:d-1] dd_matrix_t;
     typedef logic[0:d-1][0:7] dm_matrix_t;
     typedef logic[0:7][0:d-1] md_matrix_t;
-    typedef logic[0:7][0:7+d] mr_matrix_t;
-    typedef logic[0:7+d][0:7] rm_matrix_t;
-    typedef logic[0:7+d][0:7+d] rr_matrix_t;
-    typedef logic[0:6+2*d][0:7] nm_matrix_t;
-    typedef logic[0:6+d][0:7] bm_matrix_t;
+    typedef logic[0:d-1][0:7+d] dn_matrix_t;
+    typedef logic[0:7+d][0:d-1] nd_matrix_t;
+    typedef logic[0:7][0:7+d] mn_matrix_t;
+    typedef logic[0:7+d][0:7] nm_matrix_t;
+    typedef logic[0:7+d][0:7+d] nn_matrix_t;
+    typedef logic[0:6+2*d][0:7] mul_m_matrix_t;
+    typedef logic[0:6+d][0:7] mc_m_matrix_t;
 
 
     typedef logic [0:3][0:3][0:7] aes_state_t;
@@ -93,13 +95,13 @@ interface params_if;
     mm_matrix_t Linv;
 
     dm_matrix_t B;
-    nm_matrix_t B_ext;
-    bm_matrix_t B_ext_MC;
+    mul_m_matrix_t B_ext;
+    mc_m_matrix_t B_ext_MC;
 
-    mr_matrix_t MC;
+    dn_matrix_t MC;
     mm_matrix_t T11;
     dm_matrix_t T21;
-    rr_matrix_t T;
+    nn_matrix_t T;
     state_t t;
 
 

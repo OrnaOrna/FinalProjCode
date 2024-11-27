@@ -9,7 +9,7 @@ module square(in, out, r, B_ext);
     input state_t in;
     input red_poly_t r;
     output state_t out;
-    input nm_matrix_t B_ext;
+    input mul_m_matrix_t B_ext;
 
     // Result of rasining to the power of 2 without modular reduction 
     logic [0:14+2*d] pre_mod;

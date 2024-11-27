@@ -10,7 +10,7 @@ module multiplier(out, p1, p2, r, B_ext);
     output state_t out;
     input state_t p1, p2;
     input red_poly_t r;
-    input nm_matrix_t B_ext;
+    input mul_m_matrix_t B_ext;
 
     // partial products are extended to length 2m+2d-1, to reach the highest degree available by multiplication
     logic [0:7+d][0:14+2*d] partial_products;

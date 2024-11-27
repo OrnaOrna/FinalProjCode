@@ -11,11 +11,11 @@ module matrix_mul(
 
     input state_t in;
     output state_t out;
-    input rr_matrix_t matrix;
+    input nn_matrix_t matrix;
 
     // AFAIK, SystemVerilog does not allow slicing a column of an array, so we must use a trick where we transpose the matrix, then
     // slice the row of the transposed matrix. After calculating the result, we have to transpose it back.
-    rr_matrix_t matrix_transposed;
+    nn_matrix_t matrix_transposed;
 
     genvar i,j;
     generate

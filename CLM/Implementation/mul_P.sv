@@ -10,9 +10,9 @@ module mul_P(out, r, M);
     input red_poly_t r;
     output state_t out;
 
-    input mr_matrix_t M;
+    input dn_matrix_t M;
 
-    rm_matrix_t M_transposed;
+    nd_matrix_t M_transposed;
 
     genvar i, j;
     generate
