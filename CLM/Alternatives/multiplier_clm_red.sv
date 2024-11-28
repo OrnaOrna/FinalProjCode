@@ -17,7 +17,7 @@ module multiplier(inouts, random_vect, MC, B_ext);
     input mul_m_matrix_t B_ext;
     
     // Accumulator holds during the i'th CC the sum up to p2_i.
-    logic [0:6+2*d] accumulator, accumulator_next;
+    logic [0:14+2*d] accumulator, accumulator_next;
     state_t refresh_accumulator, to_xor;
 
     // Variables for the post-multiplication modular reduction
@@ -88,7 +88,7 @@ module multiplier(inouts, random_vect, MC, B_ext);
 
 
     // "Hide" the inputs to the modular reduction before the final clock cycle
-    assign overflow = final_cycle ? accumulator[8+d:6+2*d] : '0;
+    assign overflow = final_cycle ? accumulator[8+d:14+2*d] : '0;
     assign q = final_cycle ? random_vect_saved[8+d] : '0;
 
     // Calculate the modular reduction
@@ -110,12 +110,13 @@ module multiplier(inouts, random_vect, MC, B_ext);
     // Function that should hopefully XOR only the correct bits at each clock cycle
     // used for updating only the relevant bits in the accumulator
     function automatic state_t xor_bits(
-        input logic[0:6+2*d] a,
+        input logic[14+2*d] a,
         input state_t b,
         input state_t c,
         input logic [0:$clog2(9+d)-1] i);
-        
-        for (int j = 0; j < 7+2*d; j++) begin
+
+        int j;
+        for (j = 0; j < 7+2*d; j++) begin
             if (j < i) begin
                 xor_bits[j] = a[j];
             end else if (j >= i && j < i+8+d) begin

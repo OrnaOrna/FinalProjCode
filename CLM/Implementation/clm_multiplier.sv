@@ -23,9 +23,9 @@ module multiplier(out, p1, p2, r, B_ext);
             if (i != 0) begin
                 assign partial_products[i][0:i-1] = '0;
             end
-            assign partial_products[i][i+:8+d] = p1 & {8+d{p2[i]}};
+            assign partial_products[i][i +: (8+d)] = p1 & {8+d{p2[i]}};
             if (i != 7+d) begin
-                assign partial_products[i][8+d+i:14+2*d] = '0;
+                assign partial_products[i][(8+d+i):(14+2*d)] = '0;
             end
         end
     endgenerate
