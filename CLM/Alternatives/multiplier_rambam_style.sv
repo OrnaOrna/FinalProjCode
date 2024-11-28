@@ -18,6 +18,10 @@ module multiplier(inouts, random_vect, MC, q);
     logic [0:$clog2(9+d)-1] shift_counter, shift_counter_next, shift_counter_capped;
     // Whether to continue counting or not. This is a very simple implementation of a state machine.
     logic active;
+    // The random vector saved for the refresh
+    red_poly_t[0:2*(8+d)-1] random_vect_saved;
+    state_t p1_saved;
+
 
     // State transitions
     always_ff @(posedge inouts.clk or posedge inouts.rst) begin
@@ -26,11 +30,15 @@ module multiplier(inouts, random_vect, MC, q);
             shifter <= '0;
             shift_counter <= '0;
             active <= 1'b0;
+            p1_saved <= '0;
+            random_vect_saved <= '0;
         end else if (inouts.drdy_i) begin 
             active <= 1'b1;
             accumulator <= '0;
+            p1_saved <= inouts.p1;
             shifter <= inouts.p2;
             shift_counter <= '0;
+            random_vect_saved <= random_vect;
         end else if (active) begin
             if (shift_counter == 7+d) begin
                 active <= 1'b0;
@@ -55,7 +63,7 @@ module multiplier(inouts, random_vect, MC, q);
 
     assign inouts.drdy_o = (shift_counter == 8+d);
     assign shift_counter_next = shift_counter + 1;
-    assign accumulator_next = accumulator ^ refresh_accumulator ^ ({8+d{inouts.p1[shift_counter_capped]}} & shifter);
+    assign accumulator_next = accumulator ^ refresh_accumulator ^ ({8+d{p1_saved[shift_counter_capped]}} & shifter);
     assign shifter_next = {1'b0, shifter[1:7+d]} ^ refresh_shifter ^ ({8+d{shifter[7+d]}} & pq);
 
     // Calculate PQ via mul_P
@@ -66,6 +74,6 @@ module multiplier(inouts, random_vect, MC, q);
     assign pq[0:d-1] = pq_wo_msb[0:d-1];
 
 
-    mul_P acc_refresher (.out(refresh_accumulator), .r(random_vect[shift_counter_capped]), .M(MC));
-    mul_P shf_refresher (.out(refresh_shifter), .r(random_vect[shift_counter_capped+(8+d)]), .M(MC));
+    mul_P acc_refresher (.out(refresh_accumulator), .r(random_vect_saved[shift_counter_capped]), .M(MC));
+    mul_P shf_refresher (.out(refresh_shifter), .r(random_vect_saved[shift_counter_capped+(8+d)]), .M(MC));
 endmodule

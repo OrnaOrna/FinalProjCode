@@ -43,7 +43,7 @@ module multiplier(out, p1, p2, r, B_ext);
 
     // Use B_ext as a systematic encoder to get the modular reduction term (again, may need to transpose)
     // concatenation from the LEFT means lower bits, this is where we should add the refresh
-    logic [0:7+d] reduction_term;
+    state_t reduction_term;
     generate
         for (i = 0; i < 8; i++) begin
             logic [0:6+2*d] column;

@@ -4,12 +4,13 @@ import types::*;
 
 // CLM multiplier with refresh in the CLM style, with serial implementation.
 // 2*n (n-m)-bit random inputs are required.
-module multiplier(inouts, random_vect, MC, q);
+module multiplier(inouts, random_vect, MC);
     parameter int d = d;
 
     multiplier_io_if.mul inouts;
     input red_poly_t[0:2*(8+d)-1] random_vect;
     input dn_matrix_t MC;
+
     
     // Accumulator holds during the i'th CC the sum up to p2_i. Shifter
     // holds p1 shifted and reduced i times.
@@ -19,6 +20,9 @@ module multiplier(inouts, random_vect, MC, q);
     logic active;
     // Which of the random inputs to use as the random Q for the random modular reduction
     red_poly_t q;
+    // The random vector saved for the refresh
+    red_poly_t[0:2*(8+d)-1] random_vect_saved;
+    state_t p1_saved;
 
     // State transitions
     always_ff @(posedge inouts.clk or posedge inouts.rst) begin
@@ -27,11 +31,15 @@ module multiplier(inouts, random_vect, MC, q);
             shifter <= '0;
             shift_counter <= '0;
             active <= 1'b0;
+            p1_saved <= '0;
+            random_vect_saved <= '0;
         end else if (inouts.drdy_i) begin 
             active <= 1'b1;
             accumulator <= '0;
             shifter <= inouts.p2;
             shift_counter <= '0;
+            p1_saved <= inouts.p1;
+            random_vect_saved <= random_vect;
         end else if (active) begin
             if (shift_counter == 7+d) begin
                 active <= 1'b0;
@@ -56,7 +64,7 @@ module multiplier(inouts, random_vect, MC, q);
 
     assign inouts.drdy_o = (shift_counter == 8+d);
     assign shift_counter_next = shift_counter + 1;
-    assign accumulator_next = accumulator ^ refresh_accumulator ^ ({8+d{inouts.p1[shift_counter_capped]}} & shifter);
+    assign accumulator_next = accumulator ^ refresh_accumulator ^ ({8+d{p1_saved[shift_counter_capped]}} & shifter);
     assign shifter_next = {1'b0, shifter[1:7+d]} ^ ({8+d{shifter[7+d]}} & pq);
 
     // Calculate PQ via mul_P
@@ -68,5 +76,5 @@ module multiplier(inouts, random_vect, MC, q);
     assign pq[0:d-1] = pq_wo_msb[0:d-1];
 
 
-    mul_P acc_refresher (.out(refresh_accumulator), .r(random_vect[shift_counter_capped]), .M(MC));
+    mul_P acc_refresher (.out(refresh_accumulator), .r(random_vect_saved[shift_counter_capped]), .M(MC));
 endmodule
