@@ -112,7 +112,8 @@ def perform_measurement(start, number_of_files, num_of_queries, pixel_path, chip
         plaintext = np.zeros((num_of_queries, 8), dtype=np.uint16)
         ciphertext = np.zeros((num_of_queries, 8), dtype=np.uint16)
         random_vect = np.zeros((num_of_queries, 23), dtype=np.uint16)
-        P_root = np.uint16(0)   # Number between 0-239
+        poly_and_root_num = 1  # Number between 1-239
+        P_root = np.uint16(poly_and_root_num << (16 - np.max(int(np.log2(poly_and_root_num))),0))
         traces = np.zeros((num_of_queries, SAMPLES), dtype=np.int16)
         power_traces = np.zeros((num_of_queries, SAMPLES), dtype=np.int16)
         k_vec = np.zeros((num_of_queries, 8), dtype=np.uint16)
