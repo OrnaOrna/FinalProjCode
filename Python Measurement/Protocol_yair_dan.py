@@ -7,6 +7,7 @@ NUM_OF_RANDOM = 23
 ADDR_CONT = int('2', 16)
 ADDR_TEXTI = int('016e', 16)
 ADDR_KEY = int('0100', 16)
+ADDR_P = int('0120', 16)
 ADDR_RND = int('0140', 16)
 ADDR_TEXTO = int('0180', 16)
 ADDR_MODE = int('000C', 16)
@@ -82,6 +83,10 @@ def setKey(chip_serial, key):
     write(chip_serial, ADDR_CONT, 0x0002)
     while read(chip_serial, ADDR_CONT) != 0:
         pass
+
+
+def setP(chip_serial, P):
+    writeBurst(chip_serial, ADDR_P, P)
 
 
 def writeTextRandom(chip_serial, text, rnd):

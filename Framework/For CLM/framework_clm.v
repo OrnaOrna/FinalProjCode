@@ -66,7 +66,7 @@ module framework
                    
             if (Drdy) begin
                 state <= 1'b1;
-                p_compute <= Din[500:496];
+                p_compute <= Din[511:504];
                 dat_compute <= Din[127:0];
                 
                 r_compute[0] <= Din[495:496-`d];
