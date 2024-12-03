@@ -65,7 +65,7 @@ module multiplier(inouts, random_vect, MC);
     assign inouts.drdy_o = (shift_counter == 8+d);
     assign shift_counter_next = shift_counter + 1;
     assign accumulator_next = accumulator ^ refresh_accumulator ^ ({8+d{p1_saved[shift_counter_capped]}} & shifter);
-    assign shifter_next = {1'b0, shifter[1:7+d]} ^ ({8+d{shifter[7+d]}} & pq);
+    assign shifter_next = {1'b0, shifter[0:6+d]} ^ ({8+d{shifter[7+d]}} & pq);
 
     // Calculate PQ via mul_P
     assign q = random_vect[shift_counter_capped + (8+d)];

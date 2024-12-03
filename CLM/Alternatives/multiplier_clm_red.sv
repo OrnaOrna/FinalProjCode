@@ -57,6 +57,7 @@ module multiplier(inouts, random_vect, MC, B_ext);
         end else if (active) begin
             if (final_cycle) begin
                 active <= 1'b0;
+                inouts.out <= post_reduction;
             end
             accumulator <= accumulator_next;
             counter <= counter_next;
@@ -66,8 +67,7 @@ module multiplier(inouts, random_vect, MC, B_ext);
     // Cap the counter so that no access to illegal data is made during the final
     // clock cycle. This datum is not used anyway, but to avoid synthesis errors
     // This safeguard is in place
-    always_comb begin
-        
+    always_comb begin  
         if (counter >= 8+d) begin
             counter_capped = '0;
         end else begin
@@ -76,7 +76,6 @@ module multiplier(inouts, random_vect, MC, B_ext);
     end
 
     assign inouts.drdy_o = (counter == 9+d);
-    assign inouts.out = post_reduction;
     assign counter_next = counter + 1;
     assign final_cycle = (counter == 8+d);
 
@@ -109,18 +108,17 @@ module multiplier(inouts, random_vect, MC, B_ext);
 
     // Function that should hopefully XOR only the correct bits at each clock cycle
     // used for updating only the relevant bits in the accumulator
-    function automatic state_t xor_bits(
-        input logic[14+2*d] a,
-        input state_t b,
-        input state_t c,
-        input logic [0:$clog2(9+d)-1] i);
-
+    function automatic logic[0:14+2*d] xor_bits;
+        input logic[0:14+2*d] a;
+        input state_t b, c;
+        input logic [0:$clog2(9+d)-1] i;
+        
         int j;
-        for (j = 0; j < 7+2*d; j++) begin
+        for (j = 0; j < 15+2*d; j++) begin
             if (j < i) begin
                 xor_bits[j] = a[j];
-            end else if (j >= i && j < i+8+d) begin
-                xor_bits[j] = a[j] ^ b[j] ^ c[j];
+            end else if (j < i+8+d) begin
+                xor_bits[j] = a[j] ^ b[j-i] ^ c[j-i];
             end else begin
                 xor_bits[j] = a[j];
             end

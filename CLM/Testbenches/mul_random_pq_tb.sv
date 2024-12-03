@@ -11,6 +11,7 @@ module mul_random_pq_tb();
 
     red_poly_t [0:2*(8+d)-1] random_vect;
     p_det_t p_det;
+    assign inouts.P = params.P;
 
     initial begin
         inouts.clk = 1'b0;
@@ -26,10 +27,10 @@ module mul_random_pq_tb();
         
         #10;
         inouts.drdy_i = 1'b1;
-        inouts.p1 = 16'h0000;
-        inouts.p2 = 16'h8000;
-        random_vect = '{default:8'd0};
-        p_det = 5'd11;
+        inouts.p1 = 16'hb2f4;
+        inouts.p2 = 16'hc23f;
+        p_det = 5'd12;
+        random_vect = '{default:8'hee};
         
         #10;
 
