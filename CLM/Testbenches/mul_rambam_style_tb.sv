@@ -12,6 +12,7 @@ module mul_rambam_style_tb();
     red_poly_t [0:2*(8+d)-1] random_vect;
     p_det_t p_det;
     red_poly_t q;
+    assign inouts.P = params.P;
 
     initial begin
         inouts.clk = 1'b0;
@@ -27,11 +28,11 @@ module mul_rambam_style_tb();
         
         #10;
         inouts.drdy_i = 1'b1;
-        inouts.p1 = 16'h8000;
-        inouts.p2 = 16'h8000;
-        random_vect = '{default:8'd0};
+        inouts.p1 = 16'hc23f;
+        inouts.p2 = 16'hb2f4;
+        random_vect = '{default:8'd33};
         p_det = 5'd11;
-        q = 8'h00;
+        q = 8'hea;
         
         #10;
 
