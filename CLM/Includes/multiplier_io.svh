@@ -3,7 +3,7 @@ import types::*;
 
 // Input/output interface for a multiplier working in serial mode. Additional
 // inputs vary according to the multiplier implementation.
-interface multiplier_io_if;
+interface multiplier_io_if();
     parameter int d = d;
 
     state_t p1, p2, out;
