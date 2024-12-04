@@ -3,6 +3,9 @@
 
 `define d 8
 
+// Whether to use 4 or 16 S-Boxes in the Sub-bytes stage
+`define CHEAP_SB 1
+
 
 package types;
     // m = 8, d is a parameter, r = m+d
@@ -79,6 +82,18 @@ interface sbox_inouts_if;
     // The modport used by the sbox
     modport basic (
         input clk, rst, drdy_i, in, r,
+        output out, drdy_o
+    );
+endinterface
+
+interface sub_bytes_inouts_if;
+    logic clk, rst;
+    logic active, load_r, drdy_o;
+    state_vec_t in, out;
+    red_poly_t[0:6] random_vect;
+
+    modport basic (
+        input clk, rst, active, load_r, in, random_vect,
         output out, drdy_o
     );
 endinterface

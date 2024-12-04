@@ -5,13 +5,14 @@ import types::*;
 // Alternative implementation of the Sub-bytes stage 
 // (including the end registers & r storage) using 4 S-Boxes
 module four_sbox(inouts, params);
-    sub_bytes_io_if.basic inouts;
+    sub_bytes_inouts_if.basic inouts;
     params_if.in_use params;
 
     red_poly_t[0:6] random_vect_saved;
+    state_word_t out_unsaved;
 
     logic [0:1] counter, counter_next;
-    assign counter_next = inouts.active ? counter_next + 1 : 2'b00;
+    assign counter_next = inouts.active ? counter + 1 : 2'b00;
     
     sbox_inouts_if sbox_inouts[0:3]();
     logic [0:3] sbox_drdys;
@@ -30,9 +31,7 @@ module four_sbox(inouts, params);
             end
 
             if (sbox_drdy) begin
-                for (int i = 0; i < 4; i++) begin
-                    inouts.out[counter][i] <= sbox_inouts[i].out;
-                end
+                inouts.out[counter] <= out_unsaved;
                 counter <= counter_next;
             end
         end
@@ -55,6 +54,8 @@ module four_sbox(inouts, params);
             assign sbox_inouts[i].in = inouts.in[counter][i];
             assign sbox_inouts[i].r = shift_randomness(random_vect_saved, i);
             assign sbox_drdys[i] = sbox_inouts[i].drdy_o;
+
+            assign out_unsaved[i] = sbox_inouts[i].out;
         end
     endgenerate
 endmodule
