@@ -268,15 +268,6 @@ module clm_aes_multiple_sbox_limited_p(inouts, p_det, random_vect);
             stage_ctr <= stage_ctr_next;
         end
     end
-
-    function automatic red_poly_t [0:6] shift_randomness;
-        input red_poly_t [0:6] random_inp;
-        input integer shamt;
-
-        for (int i = 0; i < 7; i++) begin
-            shift_randomness[i][0:d-1] = random_inp[(i + shamt) % 7][0:d-1];
-        end
-    endfunction
 endmodule
 
 // Simple register w/ async reset and enable for a state vector
