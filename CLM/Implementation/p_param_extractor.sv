@@ -23,7 +23,7 @@ module p_param_extractor(p_det, params);
     // For L, Linv, P, T11, T21, t
     always_comb begin
         case (p_det)
-            1: begin
+            5'd1: begin
                 L = `L1;
                 Linv = `Linv1;
                 P = `P1;
@@ -31,7 +31,7 @@ module p_param_extractor(p_det, params);
                 T21 = `W21_1;
                 t = `w1;
             end
-            2: begin
+            5'd2: begin
                 L = `L2;
                 Linv = `Linv2;
                 P = `P2;
@@ -39,7 +39,7 @@ module p_param_extractor(p_det, params);
                 T21 = `W21_2;
                 t = `w2;
             end
-            3: begin
+            5'd3: begin
                 L = `L3;
                 Linv = `Linv3;
                 P = `P3;
@@ -47,7 +47,7 @@ module p_param_extractor(p_det, params);
                 T21 = `W21_3;
                 t = `w3;
             end
-            4: begin
+            5'd4: begin
                 L = `L4;
                 Linv = `Linv4;
                 P = `P4;
@@ -55,7 +55,7 @@ module p_param_extractor(p_det, params);
                 T21 = `W21_4;
                 t = `w4;
             end
-            5: begin
+            5'd5: begin
                 L = `L5;
                 Linv = `Linv5;
                 P = `P5;
@@ -63,7 +63,7 @@ module p_param_extractor(p_det, params);
                 T21 = `W21_5;
                 t = `w5;
             end
-            6: begin
+            5'd6: begin
                 L = `L6;
                 Linv = `Linv6;
                 P = `P6;
@@ -71,7 +71,7 @@ module p_param_extractor(p_det, params);
                 T21 = `W21_6;
                 t = `w6;
             end
-            7: begin
+            5'd7: begin
                 L = `L7;
                 Linv = `Linv7;
                 P = `P7;
@@ -79,7 +79,7 @@ module p_param_extractor(p_det, params);
                 T21 = `W21_7;
                 t = `w7;
             end
-            8: begin
+            5'd8: begin
                 L = `L8;
                 Linv = `Linv8;
                 P = `P8;
@@ -87,7 +87,7 @@ module p_param_extractor(p_det, params);
                 T21 = `W21_8;
                 t = `w8;
             end
-            9: begin
+            5'd9: begin
                 L = `L9;
                 Linv = `Linv9;
                 P = `P9;
@@ -95,7 +95,7 @@ module p_param_extractor(p_det, params);
                 T21 = `W21_9;
                 t = `w9;
             end
-            10: begin
+            5'd10: begin
                 L = `L10;
                 Linv = `Linv10;
                 P = `P10;
@@ -103,7 +103,7 @@ module p_param_extractor(p_det, params);
                 T21 = `W21_10;
                 t = `w10;
             end
-            11: begin
+            5'd11: begin
                 L = `L11;
                 Linv = `Linv11;
                 P = `P11;
@@ -111,7 +111,7 @@ module p_param_extractor(p_det, params);
                 T21 = `W21_11;
                 t = `w11;
             end
-            12: begin
+            5'd12: begin
                 L = `L12;
                 Linv = `Linv12;
                 P = `P12;
@@ -119,7 +119,7 @@ module p_param_extractor(p_det, params);
                 T21 = `W21_12;
                 t = `w12;
             end
-            13: begin
+            5'd13: begin
                 L = `L13;
                 Linv = `Linv13;
                 P = `P13;
@@ -127,7 +127,7 @@ module p_param_extractor(p_det, params);
                 T21 = `W21_13;
                 t = `w13;
             end
-            14: begin
+            5'd14: begin
                 L = `L14;
                 Linv = `Linv14;
                 P = `P14;
@@ -135,7 +135,7 @@ module p_param_extractor(p_det, params);
                 T21 = `W21_14;
                 t = `w14;
             end
-            15: begin
+            5'd15: begin
                 L = `L15;
                 Linv = `Linv15;
                 P = `P15;
@@ -143,7 +143,7 @@ module p_param_extractor(p_det, params);
                 T21 = `W21_15;
                 t = `w15;
             end
-            16: begin
+            5'd16: begin
                 L = `L16;
                 Linv = `Linv16;
                 P = `P16;
@@ -151,7 +151,7 @@ module p_param_extractor(p_det, params);
                 T21 = `W21_16;
                 t = `w16;
             end
-            17: begin
+            5'd17: begin
                 L = `L17;
                 Linv = `Linv17;
                 P = `P17;
@@ -159,7 +159,7 @@ module p_param_extractor(p_det, params);
                 T21 = `W21_17;
                 t = `w17;
             end
-            18: begin
+            5'd18: begin
                 L = `L18;
                 Linv = `Linv18;
                 P = `P18;
@@ -167,7 +167,7 @@ module p_param_extractor(p_det, params);
                 T21 = `W21_18;
                 t = `w18;
             end
-            19: begin
+            5'd19: begin
                 L = `L19;
                 Linv = `Linv19;
                 P = `P19;
@@ -175,7 +175,7 @@ module p_param_extractor(p_det, params);
                 T21 = `W21_19;
                 t = `w19;
             end
-            20: begin
+            5'd20: begin
                 L = `L20;
                 Linv = `Linv20;
                 P = `P20;
@@ -183,7 +183,7 @@ module p_param_extractor(p_det, params);
                 T21 = `W21_20;
                 t = `w20;
             end
-            21: begin
+            5'd21: begin
                 L = `L21;
                 Linv = `Linv21;
                 P = `P21;
@@ -191,7 +191,7 @@ module p_param_extractor(p_det, params);
                 T21 = `W21_21;
                 t = `w21;
             end
-            22: begin
+            5'd22: begin
                 L = `L22;
                 Linv = `Linv22;
                 P = `P22;
@@ -199,7 +199,7 @@ module p_param_extractor(p_det, params);
                 T21 = `W21_22;
                 t = `w22;
             end
-            23: begin
+            5'd23: begin
                 L = `L23;
                 Linv = `Linv23;
                 P = `P23;
@@ -207,7 +207,7 @@ module p_param_extractor(p_det, params);
                 T21 = `W21_23;
                 t = `w23;
             end
-            24: begin
+            5'd24: begin
                 L = `L24;
                 Linv = `Linv24;
                 P = `P24;
@@ -215,7 +215,7 @@ module p_param_extractor(p_det, params);
                 T21 = `W21_24;
                 t = `w24;
             end
-            25: begin
+            5'd25: begin
                 L = `L25;
                 Linv = `Linv25;
                 P = `P25;
@@ -223,7 +223,7 @@ module p_param_extractor(p_det, params);
                 T21 = `W21_25;
                 t = `w25;
             end
-            26: begin
+            5'd26: begin
                 L = `L26;
                 Linv = `Linv26;
                 P = `P26;
@@ -231,7 +231,7 @@ module p_param_extractor(p_det, params);
                 T21 = `W21_26;
                 t = `w26;
             end
-            27: begin
+            5'd27: begin
                 L = `L27;
                 Linv = `Linv27;
                 P = `P27;
@@ -239,7 +239,7 @@ module p_param_extractor(p_det, params);
                 T21 = `W21_27;
                 t = `w27;
             end
-            28: begin
+            5'd28: begin
                 L = `L28;
                 Linv = `Linv28;
                 P = `P28;
@@ -247,7 +247,7 @@ module p_param_extractor(p_det, params);
                 T21 = `W21_28;
                 t = `w28;
             end
-            29: begin
+            5'd29: begin
                 L = `L29;
                 Linv = `Linv29;
                 P = `P29;
@@ -255,7 +255,7 @@ module p_param_extractor(p_det, params);
                 T21 = `W21_29;
                 t = `w29;
             end
-            30: begin
+            5'd30: begin
                 L = `L30;
                 Linv = `Linv30;
                 P = `P30;

@@ -46,7 +46,7 @@ module clm_tb();
         
         #10;
 
-        clm_inouts.drdy_i = 1'b0;
+        // clm_inouts.drdy_i = 1'b0;
 
         @(clm_inouts.drdy_o);
         #5;

@@ -112,8 +112,8 @@ def perform_measurement(start, number_of_files, num_of_queries, pixel_path, chip
         plaintext = np.zeros((num_of_queries, 8), dtype=np.uint16)
         ciphertext = np.zeros((num_of_queries, 8), dtype=np.uint16)
         random_vect = np.zeros((num_of_queries, 23), dtype=np.uint16)
-        poly_and_root_num = 1  # Number between 1-239
-        P_root = np.uint16(poly_and_root_num << (16 - np.max(int(np.log2(poly_and_root_num))),0))
+        poly_and_root_num = 2  # Number between 1-239
+        P_root = np.uint16(poly_and_root_num << (16 - np.max(int(np.log2(poly_and_root_num+1)),0)))
         traces = np.zeros((num_of_queries, SAMPLES), dtype=np.int16)
         power_traces = np.zeros((num_of_queries, SAMPLES), dtype=np.int16)
         k_vec = np.zeros((num_of_queries, 8), dtype=np.uint16)
@@ -140,7 +140,7 @@ def perform_measurement(start, number_of_files, num_of_queries, pixel_path, chip
             if WITH_UART:
                 # print(f"  {sendx}    writing")
                 setKey(chip_serial, key[trace_num, :])
-                setP(chip_serial, P_root)
+                #setP(chip_serial, [P_root])
                 writeTextRandom(chip_serial, plaintext[trace_num, :], random_vect[trace_num, :])
                 execute(chip_serial)
                 f = readText(chip_serial, 16)
@@ -183,7 +183,7 @@ def perform_measurement(start, number_of_files, num_of_queries, pixel_path, chip
                 "samples": SAMPLES,
                 "Sampling_freq": SAMPLING_FREQUENCY,
                 "BYTE": BYTE,
-                "EXP_MODE": EXP_MODE,
+                "EXP_MODE": EXP_MODE_PT,
                 "FREQ_ENUM": FREQ_ENUM_ARRAY,
             }
             if MEAS_POWER:

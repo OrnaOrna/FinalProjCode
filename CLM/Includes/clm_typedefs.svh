@@ -4,7 +4,7 @@
 `define d 8
 
 // Whether to use 4 or 16 S-Boxes in the Sub-bytes stage
-`define CHEAP_SB 1
+`define CHEAP_SB 0
 
 
 package types;
@@ -132,6 +132,14 @@ interface params_if;
     );
 endinterface
 
+function red_poly_t [0:6] shift_randomness;
+    input red_poly_t [0:6] random_inp;
+    input integer shamt;
+
+    for (int i = 0; i < 7; i++) begin
+        shift_randomness[i][0:d-1] = random_inp[(i + shamt) % 7][0:d-1];
+    end
+endfunction
 
 // Same as in RAMBAM, with an added stage.
 `define ROUND_BITS 4
