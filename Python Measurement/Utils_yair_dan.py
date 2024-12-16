@@ -112,8 +112,12 @@ def perform_measurement(start, number_of_files, num_of_queries, pixel_path, chip
         plaintext = np.zeros((num_of_queries, 8), dtype=np.uint16)
         ciphertext = np.zeros((num_of_queries, 8), dtype=np.uint16)
         random_vect = np.zeros((num_of_queries, 23), dtype=np.uint16)
-        poly_and_root_num = 2  # Number between 1-239
-        P_root = np.uint16(poly_and_root_num << (16 - np.max(int(np.log2(poly_and_root_num+1)),0)))
+
+        poly_and_root_num = 30  # Number between 1-239
+        reversed_binary = bin(poly_and_root_num)[2:][::-1]
+        reversed_binary = reversed_binary + (16 - len(reversed_binary)) * '0'
+        P_root = np.uint16(int(reversed_binary, 2))
+        
         traces = np.zeros((num_of_queries, SAMPLES), dtype=np.int16)
         power_traces = np.zeros((num_of_queries, SAMPLES), dtype=np.int16)
         k_vec = np.zeros((num_of_queries, 8), dtype=np.uint16)
