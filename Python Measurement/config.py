@@ -17,10 +17,10 @@ d = 8
 P = 299
 BYTE = 7
 T_TEST = True
-SAMPLES = 10000
+SAMPLES = 50000
 
 OFFSET = 0  
-NUM_OF_QUERIES = 1000
+NUM_OF_QUERIES = 101
 NUMBER_OF_FILES = 1
 START = 0  # file from which measurement will continue
 # saving methods: NPY (Python compatible), MAT (Matlab compatible),None for not saving the workspace

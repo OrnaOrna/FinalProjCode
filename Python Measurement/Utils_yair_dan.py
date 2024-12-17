@@ -113,7 +113,7 @@ def perform_measurement(start, number_of_files, num_of_queries, pixel_path, chip
         ciphertext = np.zeros((num_of_queries, 8), dtype=np.uint16)
         random_vect = np.zeros((num_of_queries, 23), dtype=np.uint16)
 
-        poly_and_root_num = 30  # Number between 1-239
+        poly_and_root_num = 1  # Number between 1-239
         reversed_binary = bin(poly_and_root_num)[2:][::-1]
         reversed_binary = reversed_binary + (16 - len(reversed_binary)) * '0'
         P_root = np.uint16(int(reversed_binary, 2))
@@ -144,7 +144,7 @@ def perform_measurement(start, number_of_files, num_of_queries, pixel_path, chip
             if WITH_UART:
                 # print(f"  {sendx}    writing")
                 setKey(chip_serial, key[trace_num, :])
-                #setP(chip_serial, [P_root])
+                setP(chip_serial, [P_root])
                 writeTextRandom(chip_serial, plaintext[trace_num, :], random_vect[trace_num, :])
                 execute(chip_serial)
                 f = readText(chip_serial, 16)
