@@ -13,15 +13,18 @@ allW21_file = fopen('allW21.svh', 'w');
 allw_file = fopen('allw.svh', 'w');
 
 % Produce parameters and writing them to file
-for i=1:length(all_irreduc_pol)
-    P = all_irreduc_pol(i);
-    L = isomorphism(P);
-    L_inv = inverse_over_F2(L);
-    [W11,W21,w] = affineTransformation_export(P,d);
-    write_to_file(allP_file,flip(dec2bin(P)=='1'),"P"+i)
-    write_to_file(allL_file,L',"L"+i)
-    write_to_file(allLinv_file,L_inv',"Linv"+i)
-    write_to_file(allW11_file,W11',"W11_"+i)
-    write_to_file(allW21_file,W21',"W21_"+i)
-    write_to_file(allw_file,w',"w"+i)
+for j=1:length(all_irreduc_pol)
+    P = all_irreduc_pol(j);
+    for r=1:8
+        i = 8*(j-1)+r; 
+        L = isomorphism(P,r);
+        L_inv = inverse_over_F2(L);
+        [W11,W21,w] = affineTransformation_export(P,d,r);
+        write_to_file(allL_file,L',"L"+i)
+        write_to_file(allLinv_file,L_inv',"Linv"+i)
+        write_to_file(allW11_file,W11',"W11_"+i)
+        write_to_file(allW21_file,W21',"W21_"+i)
+        write_to_file(allw_file,w',"w"+i)
+    end
+    write_to_file(allP_file,flip(dec2bin(P)=='1'),"P"+j)
 end

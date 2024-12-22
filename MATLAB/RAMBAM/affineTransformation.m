@@ -1,4 +1,8 @@
-function [W,w] = affineTransformation(P, Q)
+function [W,w] = affineTransformation(P, Q, root)
+% The root number is a default variable 
+if nargin == 1
+    root = 1;
+end
 % Produce the matrix and vector of the modified transformation according to
 % the result obtained in the paper
 T = [1 1 1 1 1 0 0 0; 
@@ -10,7 +14,7 @@ T = [1 1 1 1 1 0 0 0;
      1 1 1 0 0 0 1 1; 
      1 1 1 1 0 0 0 1];
 t = [1 1 0 0 0 1 1 0];
-L = isomorphism(P);
+L = isomorphism(P, root);
 Q_bits = dec2bin(Q) == '1';
 P_bits = dec2bin(P) == '1';
 d = length(Q_bits) -1;  
