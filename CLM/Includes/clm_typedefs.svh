@@ -3,6 +3,9 @@
 
 `define d 8
 
+// Whether to use 4 or 16 S-Boxes in the Sub-bytes stage
+`define CHEAP_SB 0
+
 
 package types;
     // m = 8, d is a parameter, r = m+d
@@ -83,6 +86,18 @@ interface sbox_inouts_if;
     );
 endinterface
 
+interface sub_bytes_inouts_if;
+    logic clk, rst;
+    logic active, load_r, drdy_o;
+    state_vec_t in, out;
+    red_poly_t[0:6] random_vect;
+
+    modport basic (
+        input clk, rst, active, load_r, in, random_vect,
+        output out, drdy_o
+    );
+endinterface
+
 // Interface for all derived parameters (depenedent on P, Q) used throughout the cipher.
 // They are identical and denoted in the same way as the ones used in RAMBAM, 
 // but are extracted as physical signals and not module parameters.
@@ -117,6 +132,14 @@ interface params_if;
     );
 endinterface
 
+function red_poly_t [0:6] shift_randomness;
+    input red_poly_t [0:6] random_inp;
+    input integer shamt;
+
+    for (int i = 0; i < 7; i++) begin
+        shift_randomness[i][0:d-1] = random_inp[(i + shamt) % 7][0:d-1];
+    end
+endfunction
 
 // Same as in RAMBAM, with an added stage.
 `define ROUND_BITS 4

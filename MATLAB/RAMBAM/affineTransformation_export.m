@@ -1,4 +1,8 @@
-function [W11,W21,w] = affineTransformation_export(P,d)
+function [W11,W21,w] = affineTransformation_export(P,d,root)
+% The root number is a default variable 
+if nargin == 1
+    root = 1;
+end
 % Only used to export the matrices, check the original function
 T = [1 1 1 1 1 0 0 0; 
      0 1 1 1 1 1 0 0; 
@@ -9,7 +13,7 @@ T = [1 1 1 1 1 0 0 0;
      1 1 1 0 0 0 1 1; 
      1 1 1 1 0 0 0 1];
 t = [1 1 0 0 0 1 1 0];
-L = isomorphism(P);
+L = isomorphism(P,root);
 P_bits = dec2bin(P) == '1';
 m = length(P_bits) -1;
 L_inv = inverse_over_F2(L);

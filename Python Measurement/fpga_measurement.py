@@ -45,7 +45,7 @@ for i in range(0, 1):
         ps = None
         print("pico is not armed")
 
-    folder_string = PATH + f'\\--For project-- FvR {EXP_MODE_PT}pt {d}bit {EXP_MODE_DEVICE} {EXP_MODE_RAND} rand {NUM_OF_QUERIES} TRACES {SAMPLES} samples'
+    folder_string = PATH + f'\\--For project-- CLM FvR {EXP_MODE_PT}pt {d}bit {EXP_MODE_DEVICE} {EXP_MODE_RAND} rand {NUM_OF_QUERIES} TRACES {SAMPLES} samples'
 
     if PICO_ARMED:
         assure_path_exists(folder_string)

@@ -36,16 +36,16 @@ module clm_sbox(inouts, params);
     power #(.pow(2)) pow4(.out(t12), .in(t3_saved), .r(inouts.r[2]), .B_ext(params.B_ext));
     register_d pipe_stage2(.clk(inouts.clk), .rst(inouts.rst), .en(reg3_en), .in(t12), .out(t12_saved));
 
-    multiplier mult2t12(.out(t14), .p1(t2_saved), .p2(t12_saved), .r(inouts.r[2]), .B_ext(params.B_ext));
+    multiplier mult2t12(.out(t14), .p1(t2_saved), .p2(t12_saved), .r(inouts.r[3]), .B_ext(params.B_ext));
     register_d pipe_stage3(.clk(inouts.clk), .rst(inouts.rst), .en(reg4_en), .in(t14), .out(t14_saved));
 
-    multiplier mult3t12(.out(t15), .p1(t3_saved), .p2(t12_saved), .r(inouts.r[3]), .B_ext(params.B_ext));
+    multiplier mult3t12(.out(t15), .p1(t3_saved), .p2(t12_saved), .r(inouts.r[4]), .B_ext(params.B_ext));
     register_d pipe_stage4(.clk(inouts.clk), .rst(inouts.rst), .en(reg4_en), .in(t15), .out(t15_saved));
 
-    power #(.pow(4)) pow16(.out(t240), .in(t15_saved), .r(inouts.r[4]), .B_ext(params.B_ext));
+    power #(.pow(4)) pow16(.out(t240), .in(t15_saved), .r(inouts.r[5]), .B_ext(params.B_ext));
     register_d pipe_stage5(.clk(inouts.clk), .rst(inouts.rst), .en(reg5_en), .in(t240), .out(t240_saved));
 
-    multiplier mult4t240(.out(t254), .p1(t14_saved), .p2(t240_saved), .r(inouts.r[4]), .B_ext(params.B_ext));
+    multiplier mult4t240(.out(t254), .p1(t14_saved), .p2(t240_saved), .r(inouts.r[6]), .B_ext(params.B_ext));
     register_d pipe_stage6(.clk(inouts.clk), .rst(inouts.rst), .en(reg6_en), .in(t254), .out(t254_saved));
 
     affine_transform raff(.out(inouts.out), .in(t254_saved), .T(params.T), .t(params.t));

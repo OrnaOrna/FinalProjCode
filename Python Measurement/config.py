@@ -9,7 +9,7 @@ CONNECTION_KO = (
 
 """Paths"""
 ADJUSTED_PATH = True
-PATH = "C:\\Users\\Public\\Documents\\measurements"
+PATH = "C:\\Users\\Public\\Public Documents 1\\measurements"
 HARD_DRIVE_PATH = "C:\\Users\\Public\\Documents\\dan_yair_meas_config"
 
 """"experiment setup"""
@@ -17,10 +17,10 @@ d = 8
 P = 299
 BYTE = 7
 T_TEST = True
-SAMPLES = 1000
+SAMPLES = 50000
 
 OFFSET = 0  
-NUM_OF_QUERIES = 50 
+NUM_OF_QUERIES = 101
 NUMBER_OF_FILES = 1
 START = 0  # file from which measurement will continue
 # saving methods: NPY (Python compatible), MAT (Matlab compatible),None for not saving the workspace
@@ -28,7 +28,7 @@ SAVE_METHOD = "MAT"
 PS_MODEL = 5000
 
 
-PICO_ARMED = False  # armed: if true will measure, otherwise will skip
+PICO_ARMED = True  # armed: if true will measure, otherwise will skip
 ARMED = True  # armed: if true will measure, otherwise will skip
 WITH_UART = True
 MEAS_POWER = True

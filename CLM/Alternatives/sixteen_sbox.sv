@@ -1,14 +1,14 @@
-`include "sub_bytes_io.svh"
 `include "clm_typedefs.svh"
 import types::*;
 
 // Alternative implementation of the Sub-bytes stage 
 // (including the end registers & r storage) using 16 S-Boxes
 module sixteen_sbox(inouts, params);
-    sub_bytes_io_if.basic inouts;
+    sub_bytes_inouts_if.basic inouts;
     params_if.in_use params;
 
     red_poly_t[0:6] random_vect_saved;
+    state_vec_t out_unsaved;
 
     sbox_inouts_if sbox_inouts[0:3][0:3]();
     logic [0:3][0:3] sbox_drdys;
@@ -25,34 +25,30 @@ module sixteen_sbox(inouts, params);
                 random_vect_saved <= shift_randomness(random_vect_saved, 16);
             end
 
-            if (sbox_drdy) begin
-                for (int i = 0; i < 4; i++) begin
-                    for (int j = 0; j < 4; j++) begin
-                        inouts.out[i][j] <= sbox_inouts[i][j].out;
-                    end
-                end
-            end
+            inouts.out <= out_unsaved;
         end
     end
     
     assign inouts.drdy_o = sbox_drdy;
     assign sbox_drdy = &sbox_drdys;
 
-    genvar i, j;
+    genvar k, l;
     generate
-        for (i = 0; i < 4; i++) begin : sbox_gen_outer
-            for (j = 0; j < 4; j++) begin : sbox_gen_inner
+        for (k = 0; k < 4; k++) begin : sbox_gen_outer
+            for (l = 0; l < 4; l++) begin : sbox_gen_inner
                 clm_sbox sbox_inst(
-                    .inouts(sbox_inouts[i][j]),
+                    .inouts(sbox_inouts[k][l]),
                     .params(params)
                 );
 
-                assign sbox_inouts[i][j].clk = inouts.clk;
-                assign sbox_inouts[i][j].rst = inouts.rst;
-                assign sbox_inouts[i][j].drdy_i = inouts.active;
-                assign sbox_inouts[i][j].in = inouts.in[i][j];
-                assign sbox_inouts[i][j].r = shift_randomness(random_vect_saved, 4*i+j);
-                assign sbox_drdys[i][j] = sbox_inouts[i][j].drdy_o;
+                assign sbox_inouts[k][l].clk = inouts.clk;
+                assign sbox_inouts[k][l].rst = inouts.rst;
+                assign sbox_inouts[k][l].drdy_i = inouts.active;
+                assign sbox_inouts[k][l].in = inouts.in[k][l];
+                assign sbox_inouts[k][l].r = shift_randomness(random_vect_saved, 4*k+l);
+                assign sbox_drdys[k][l] = sbox_inouts[k][l].drdy_o;
+
+                assign out_unsaved[k][l] = sbox_inouts[k][l].out;
             end
         end
     endgenerate
